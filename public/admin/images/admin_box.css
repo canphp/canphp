@@ -1,0 +1,102 @@
+@charset "utf-8";
+A {COLOR: #333; TEXT-DECORATION: none}
+A:hover{TEXT-DECORATION: underline}
+/*框架内部间隔*/
+#contain {
+	TEXT-ALIGN:left;
+	MARGIN:0px auto;
+	PADDING:10px;
+}
+/*搜索框*/
+#search_div {BORDER: #dbe1e6 1px solid; MARGIN-BOTTOM: 10px; BACKGROUND: #f7f7fa; padding:6px;}
+/*表单框架*/
+.form_box {
+	border:1px solid #ddd;
+	padding:5px;
+}
+/*表单扩展*/
+input.button,button.button,A.button{
+	BACKGROUND:#f7f7f7 url(buttonbg.png) repeat-x left top;
+}
+input.button:hover,button.button:hover,A.button:hover{
+	BACKGROUND:#f7f7f7 url(buttonbg.png) repeat-x left bottom;
+}
+.input.ruler {
+      BACKGROUND:#ffffff url(ruler.gif) repeat-x left bottom; border:1px solid #999;width:400px;
+}
+.input.date {
+	BACKGROUND:#ffffff url(date.gif) no-repeat 160px 4px; border:1px solid #999; margin-right:3px; width:170px;
+}
+.inputfile {
+	float:left; BORDER: #999 1px solid; PADDING: 0px 5px; HEIGHT: 28px; LINE-HEIGHT: 28px; MARGIN: 0px; margin-right:5px; VERTICAL-ALIGN: middle; BACKGROUND: #ffffff; width:400px;
+}
+/*导航标题菜单*/
+.admin_title {
+	LINE-HEIGHT:32px;
+	HEIGHT:40px;
+	COLOR:#000;
+	FONT-SIZE:16px;
+	FONT-WEIGHT:bold}
+.admin_title h2 {
+	FLOAT:left;
+	COLOR:#333;
+	HEIGHT:32px;
+	LINE-HEIGHT:32px;
+	BACKGROUND:#fff;
+	PADDING:0px 10px;
+	MARGIN:0px;
+	FONT-SIZE:16px;
+	FONT-WEIGHT:700;
+}
+.admin_title A {
+	FLOAT:left;
+	CURSOR:pointer;
+	HEIGHT:26px;
+	LINE-HEIGHT:26px;
+	BORDER:#c2d1d8 1px solid;
+	PADDING:0px 10px;
+	font-size:12px;
+	margin-left:8px;
+	margin-top:2px;
+	color:#333;
+	BACKGROUND:url(buttonbg.png) #f7f7fa repeat-x left 0px;
+}
+.admin_title A.right {
+	FLOAT:right;
+}
+.admin_title A:hover {
+	color:#FFF;
+	text-decoration:none;
+	border:1px solid #3071bf;
+	BACKGROUND:#005d9f url(buttonbg.png) repeat-x left bottom;
+}
+/*导航子菜单*/
+.admin_menu {
+	LINE-HEIGHT:28px;
+	HEIGHT:28px;
+	background:#eceff2;
+	padding:5px;
+}
+.admin_menu A {
+	FLOAT:left;
+	CURSOR:pointer;
+	HEIGHT:26px;
+	LINE-HEIGHT:26px;
+	BORDER:#c2d1d8 1px solid;
+	PADDING:0px 10px;
+	margin-right:5px;
+	font-size:12px;
+	color:#333;
+	BACKGROUND:url(buttonbg.png) #f7f7fa repeat-x left 0px;
+}
+.admin_menu A.right {
+	FLOAT:right;
+	margin-left:5px;
+	margin-right:0px;
+}
+.admin_menu A:hover {
+	color:#FFF;
+	text-decoration:none;
+	border:1px solid #3071bf;
+	BACKGROUND:#005d9f url(buttonbg.png) repeat-x left bottom;
+}

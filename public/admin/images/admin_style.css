@@ -1,0 +1,162 @@
+@charset "utf-8";
+* {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+BODY {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; COLOR: #333; background:#fff; FONT-SIZE: 12px
+}
+INPUT {
+	FONT-SIZE: 12px
+}
+BUTTON {
+	FONT-SIZE: 12px
+}
+SELECT {
+	BACKGROUND: #fff; FONT-SIZE: 12px
+}
+TEXTAREA {
+	BACKGROUND: #fff; FONT-SIZE: 12px
+}
+TH {
+	WHITE-SPACE: nowrap
+}
+IMG {
+	BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; DISPLAY: block; BORDER-TOP: medium none; BORDER-RIGHT: medium none
+}
+INPUT {
+	VERTICAL-ALIGN: middle
+}
+SELECT {
+	VERTICAL-ALIGN: middle
+}
+LI {
+	LIST-STYLE-TYPE: none; LIST-STYLE-IMAGE: none
+}
+A {
+	COLOR: #16387c; TEXT-DECORATION: none
+}
+A:hover {
+	TEXT-DECORATION: underline
+}
+.clear {
+	CLEAR: both
+}
+
+/*头部菜单*/
+.header {
+	BACKGROUND: #3071bf; PADDING-BOTTOM: 0px; MARGIN: 0px auto; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; HEIGHT: 40px; PADDING-TOP: 0px
+}
+.header .logo {
+	WIDTH: 200px; FLOAT: left; HEIGHT: 40px; font:19px Georgia, Arial, sans-serif; line-height:40px; color:#FFF; font-weight:700
+}
+.header .right_menu {
+	DISPLAY: block; FLOAT: right;PADDING-TOP: 6px
+}
+.right_menu SPAN A {
+	TEXT-ALIGN: center; LINE-HEIGHT: 28px; BORDER-RIGHT-WIDTH: 1px; PADDING-LEFT: 26px; PADDING-RIGHT: 10px; DISPLAY: block; BACKGROUND: url(top_menubg.gif) #368ddd no-repeat 5px 5px; FLOAT: left; BORDER-TOP-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; COLOR: #fff; MARGIN-LEFT: 8px; FONT-SIZE: 12px; BORDER-LEFT-WIDTH: 1px; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+.right_menu SPAN A:hover {
+	BACKGROUND-COLOR: #1071bf; COLOR: #fff
+}
+.right_menu SPAN A.bb {
+	BACKGROUND-POSITION: 5px -27px
+}
+.right_menu SPAN A.cc {
+	BACKGROUND-POSITION: 5px -60px
+}
+.right_menu SPAN A.dd {
+	BACKGROUND-POSITION: 5px -91px
+}
+
+/*左侧菜单*/
+#menu {TEXT-ALIGN: left; MARGIN-TOP: 10px; WIDTH: 150px; FLOAT: left; FONT: 12px Arial, Helvetica, sans-serif;}
+#menu UL{ padding:5px;}
+#menu UL LI A {PADDING-LEFT: 20px; DISPLAY: block; LINE-HEIGHT: 26px; HEIGHT: 26px; color:#0071bf; TEXT-DECORATION: none}
+#menu UL LI A:hover {BACKGROUND-COLOR: #3071bf; COLOR: #fff}
+.none {DISPLAY: none; padding:0px; margin:0px;}
+.menubg_1 {
+	CURSOR: pointer;TEXT-ALIGN: left; LINE-HEIGHT: 28px; MARGIN-TOP: 1px; TEXT-INDENT: 25px; WIDTH: 150px; BACKGROUND: url(menubg.png) repeat-x; HEIGHT: 30px; COLOR: #777; FONT-SIZE: 14px; FONT-WEIGHT: 700
+}
+.menubg_2 {
+	CURSOR: pointer; TEXT-ALIGN: left; LINE-HEIGHT: 28px; MARGIN-TOP: 1px; TEXT-INDENT: 25px; WIDTH: 150px; BACKGROUND: url(menubg.png) left -31px; HEIGHT: 30px; COLOR: #0061bf; FONT-SIZE: 14px; FONT-WEIGHT: 700
+}
+
+/*UL框架风格设置，一般不用去修改*/
+.ui-layout-pane {
+	BORDER-BOTTOM: #c6d6e7 0px solid; BORDER-LEFT: #c6d6e7 0px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: #c6d6e7 0px solid; BORDER-RIGHT: #c6d6e7 0px solid; PADDING-TOP: 0px
+}
+.ui-layout-pane-north {
+	BORDER-BOTTOM: #c6d6e7 0px solid; BORDER-LEFT: #c6d6e7 0px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-TOP: #c6d6e7 0px solid; BORDER-RIGHT: #c6d6e7 0px solid; PADDING-TOP: 0px
+}
+.ui-layout-pane-south {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BACKGROUND: #f4f6fa; BORDER-TOP: #c6d6e7 0px solid; PADDING-TOP: 0px
+}
+.ui-layout-pane-west {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 13px; PADDING-RIGHT: 0px; BACKGROUND: #f7f7fa; OVERFLOW: hidden; PADDING-TOP: 3px; BORDER-RIGHT: #c6d6e7 0px solid;
+}
+.ui-layout-center .ui-layout-content {
+	BORDER-LEFT: #c6d6e7 0px solid; BORDER-TOP: #c6d6e7 0px solid
+}
+.ui-layout-pane-center {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; OVERFLOW: hidden; PADDING-TOP: 0px
+}
+.ui-layout-content {
+	PADDING-BOTTOM: px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; OVERFLOW: hidden; PADDING-TOP: px
+}
+.ui-layout-resizer {
+	BACKGROUND: #f3f3f3
+}
+.ui-layout-toggler {
+	BACKGROUND: #bcd
+}
+.ui-layout-resizer-dragging {
+	BACKGROUND: #e2ecef
+}
+.ui-layout-resizer:hover .ui-layout-toggler {
+	BACKGROUND: #bcd
+}
+.ui-layout-resizer:hover .ui-layout-toggler:hover {
+	BACKGROUND: #fc0
+}
+.ui-layout-resizer-dragging-limit {
+	BACKGROUND: #bcd
+}
+
+
+.login_title {
+	MARGIN: 0px auto;font:24px Georgia, Arial, sans-serif; font-weight:700; margin-top:90px; width:350px; text-align:center; color:#3071bf ;
+}
+.login_main {
+	 MARGIN: 30px auto; background:#f7f7fa; width:352px; padding:6px;
+}
+.login_box {
+	MARGIN: 0px auto; WIDTH: 340px; padding:5px; BACKGROUND: #fff; border:1px solid #c2d5df;
+}
+.login_do{border:0px dashed #c4d5df; padding:8px; background:#f1f4f8; color:#F30; text-align:center; font-weight:700;}
+.login_box TABLE TH {
+	TEXT-ALIGN: left; LINE-HEIGHT: 50px; FONT-SIZE: 14px; width:70px; FONT-WEIGHT: bold
+}
+.login_box TABLE TD {
+	PADDING-BOTTOM: 0px; LINE-HEIGHT: 50px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.login_box TABLE TD INPUT {
+	MARGIN: -4px 2px 0px 0px
+}
+.login_box TABLE TD .login_input {
+	BORDER-BOTTOM: #ddd 1px solid; BORDER-LEFT: #ddd 2px solid; PADDING-BOTTOM: 0px; LINE-HEIGHT: 30px; MARGIN: 0px; PADDING-LEFT: 5px; WIDTH: 210px; PADDING-RIGHT: 5px; BACKGROUND: #fff; HEIGHT: 30px; COLOR: #000; FONT-SIZE: 14px; BORDER-TOP: #ddd 2px solid; FONT-WEIGHT: bold; BORDER-RIGHT: #ddd 1px solid; PADDING-TOP: 0px
+}
+.login_box TABLE TD .login_yz {
+	 BORDER-BOTTOM: #ddd 1px solid; BORDER-LEFT: #ddd 2px solid; PADDING-BOTTOM: 0px; LINE-HEIGHT: 30px; MARGIN: 0px; PADDING-LEFT: 5px; WIDTH: 100px; PADDING-RIGHT: 5px; BACKGROUND: #fff; HEIGHT: 30px; COLOR: #000; FONT-SIZE: 14px; BORDER-TOP: #ddd 2px solid; FONT-WEIGHT: bold; BORDER-RIGHT: #ddd 1px solid; PADDING-TOP: 0px
+}
+.login_box TABLE TD A.button {
+	BORDER-BOTTOM: medium none; TEXT-ALIGN: center; BORDER-LEFT: medium none; LINE-HEIGHT: 33px; WIDTH: 86px; DISPLAY: block; BACKGROUND: url(login_btn.gif) #d8eff7 no-repeat 0px 0px; HEIGHT: 33px; COLOR: #1664ac; FONT-SIZE: 14px; BORDER-TOP: medium none; FONT-WEIGHT: bold; BORDER-RIGHT: medium none
+}
+.login_box TABLE TD A.button:hover {
+	BACKGROUND: url(login_btn.gif) #afdef0 no-repeat 0px -33px; COLOR: #002973; TEXT-DECORATION: none
+}
+.login_footer {
+	PADDING-BOTTOM: 0px; MARGIN: 0px auto; PADDING-LEFT: 25px; WIDTH: 400px; text-align:center; PADDING-RIGHT: 0px; HEIGHT: 33px;
+}
+.login_footer P {
+	LINE-HEIGHT: 20px; COLOR: #666
+}

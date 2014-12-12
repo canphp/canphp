@@ -1,0 +1,107 @@
+/*xfcss基础处理*/
+@charset "utf-8";/*公共定义*/*{margin:0;padding:0;}BODY{MARGIN:0px;PADDING-BOTTOM:0px;PADDING-LEFT:0px;PADDING-RIGHT:0px;FONT:12px/1.5 Arial,Helvetica,sans-serif;COLOR:#333;background:#fff;-webkit-text-size-adjust:100%;color:#333;text-align:left;}div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,code,del,dfn,em,img,q,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,thead,tr,th,td,dialog,footer,header,nav,section{MARGIN:0px;PADDING-BOTTOM:0px;PADDING-LEFT:0px;PADDING-RIGHT:0px;WORD-WRAP:break-word;PADDING-TOP:0px;font-size:100%;vertical-align:baseline;}IMG{BORDER-BOTTOM-STYLE:none;BORDER-RIGHT-STYLE:none;BORDER-TOP-STYLE:none;BORDER-LEFT-STYLE:none;border:none;}PRE{WORD-WRAP:break-word}LABEL,IMG,INPUT,TH,TEXTAREA{VERTICAL-ALIGN:middle}strong,dl,dt,th,label{font-weight:700;}address{padding:5px 0;font:12px/20px}sub{font:10px/20px}br{margin:0px;}hr{clear:both;border-bottom:1px solid #ddd;}table{border:0px;margin:0;width:100%;BORDER-SPACING:0;BORDER-COLLAPSE:collapse}table,th,td{BORDER-SPACING:0;BORDER-COLLAPSE:collapse}th,td,caption{padding:0px;margin:0px;}fieldset{border:1px solid #ddd;margin:0 0 0px;padding:0 10px 10px;text-align:left;}legend{font-size:14px;font-weight:700;margin-top:0;margin-bottom:0px;background-color:#FFF;padding:5px;}UL,OL,LI{LIST-STYLE-TYPE:none}ul,ol{padding:0px;margin:0px;}ul,li{margin:0;padding:0;border:0;list-style-type:none;}dd{margin-left:10px;}/*H1到H6定义*/H1,H2,H3,H4,H5,H6{FONT-SIZE:100%;line-height:100%;font-weight:400;}h1{font-size:26px;line-height:50px;font-weight:700;font-family:georgia;}h2{font-size:24px;font-weight:700;line-height:45px;font-family:georgia;}h3{font-size:20px;font-weight:700;line-height:40px;font-family:georgia;}h4{font-size:16px;font-weight:700;line-height:26px;font-family:georgia;}h5{font-size:14px;line-height:24px;}h6{font-size:12px;line-height:22px;}.hide{display:none;}.clear{CLEAR:both}.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}.clearfix{zoom:1;}/*颜色代码*/.black{color:#000;}.red{color:#C30D23;}.blue{color:#3399FE;}.green{color:#060;}.gray{color:#999;}.orange{color:#fe7200;}/*页面基础布局定义*/.left{float:left!important;}.right{float:right!important;}/*字体对齐*/.tal{text-align:left!important;}.tac{text-align:center!important;}.tar{text-align:right!important;}/*line-height高度*/.lh10{line-height:10px;}.lh11{line-height:11px;}.lh12{line-height:12px;}.lh13{line-height:13px;}.lh14{line-height:14px;}.lh15{line-height:15px;}.lh16{line-height:16px;}.lh17{line-height:17px;}.lh18{line-height:18px;}.lh19{line-height:19px;}.lh20{line-height:20px;}.lh21{line-height:21px;}.lh22{line-height:22px;}.lh23{line-height:23px;}.lh24{line-height:24px;}.lh25{line-height:25px;}.lh26{line-height:26px;}.lh27{line-height:27px;}.lh28{line-height:28px;}.lh29{line-height:29px;}.lh30{line-height:30px;}.lh31{line-height:31px;}.lh32{line-height:32px;}.lh33{line-height:33px;}.lh34{line-height:34px;}.lh35{line-height:35px;}.lh36{line-height:36px;}.lh37{line-height:37px;}.lh38{line-height:38px;}.lh39{line-height:39px;}.lh40{line-height:40px;}/*页面构架宽 十进制 1000内*/.w1{width:1px;}.w2{width:2px;}.w3{width:3px;}.w4{width:4px;}.w5{width:5px;}.w6{width:6px;}.w7{width:7px;}.w8{width:8px;}.w9{width:9px;}.w10{width:10px;}.w20{width:20px;}.w30{width:30px;}.w40{width:40px;}.w50{width:50px;}.w60{width:60px;}.w70{width:70px;}.w80{width:80px;}.w90{width:90px;}.w100{width:100px;}.w110{width:110px;}.w120{width:120px;}.w130{width:130px;}.w140{width:140px;}.w150{width:150px;}.w160{width:160px;}.w170{width:170px;}.w180{width:180px;}.w190{width:190px;}.w200{width:200px;}.w210{width:210px;}.w220{width:220px;}.w230{width:230px;}.w240{width:240px;}.w250{width:250px;}.w260{width:260px;}.w270{width:270px;}.w280{width:280px;}.w290{width:290px;}.w300{width:300px;}.w310{width:310px;}.w320{width:320px;}.w330{width:330px;}.w340{width:340px;}.w350{width:350px;}.w360{width:360px;}.w370{width:370px;}.w380{width:380px;}.w390{width:390px;}.w400{width:400px;}.w410{width:410px;}.w420{width:420px;}.w430{width:430px;}.w440{width:440px;}.w450{width:450px;}.w460{width:460px;}.w470{width:470px;}.w480{width:480px;}.w490{width:490px;}.w500{width:500px;}.w510{width:510px;}.w520{width:520px;}.w530{width:530px;}.w540{width:540px;}.w550{width:550px;}.w560{width:560px;}.w570{width:570px;}.w580{width:580px;}.w590{width:590px;}.w600{width:600px;}.w610{width:610px;}.w620{width:620px;}.w630{width:630px;}.w640{width:640px;}.w650{width:650px;}.w660{width:660px;}.w670{width:670px;}.w680{width:680px;}.w690{width:690px;}.w700{width:700px;}.w710{width:710px;}.w720{width:720px;}.w730{width:730px;}.w740{width:740px;}.w750{width:750px;}.w760{width:760px;}.w770{width:770px;}.w780{width:780px;}.w790{width:790px;}.w800{width:800px;}.w810{width:810px;}.w820{width:820px;}.w830{width:830px;}.w840{width:840px;}.w850{width:850px;}.w860{width:860px;}.w870{width:870px;}.w880{width:880px;}.w890{width:890px;}.w900{width:900px;}.w910{width:910px;}.w920{width:920px;}.w930{width:930px;}.w940{width:940px;}.w950{width:950px;}.w960{width:960px;}.w970{width:970px;}.w980{width:980px;}.w990{width:990px;}.w1000{width:1000px;}/*页面构架高(height) 100整数内*/.h1{height:1px}.h2{height:2px}.h3{height:3px}.h4{height:4px}.h5{height:5px}.h6{height:6px}.h7{height:7px}.h8{height:8px}.h9{height:9px}.h10{height:10px}.h11{height:11px}.h12{height:12px}.h13{height:13px}.h14{height:14px}.h15{height:15px}.h16{height:16px}.h17{height:17px}.h18{height:18px}.h19{height:19px}.h20{height:20px}.h30{height:30px}.h40{height:40px}.h50{height:50px}.h60{height:60px}.h70{height:70px}.h80{height:80px}.h90{height:90px}.h100{height:100px}/*padding*/.p1{padding:1px}.p2{padding:2px}.p3{padding:3px}.p4{padding:4px}.p5{padding:5px}.p6{padding:6px}.p7{padding:7px}.p8{padding:8px}.p9{padding:9px}.p10{padding:10px}.p11{padding:11px}.p12{padding:12px}.p13{padding:13px}.p14{padding:14px}.p15{padding:15px}.p16{padding:16px}.p17{padding:17px}.p18{padding:18px}.p19{padding:19px}.p20{padding:20px}/*padding 左内边距*/.pl1{padding-left:1px}.pl2{padding-left:2px}.pl3{padding-left:3px}.pl4{padding-left:4px}.pl5{padding-left:5px}.pl6{padding-left:6px}.pl7{padding-left:7px}.pl8{padding-left:8px}.pl9{padding-left:9px}.pl10{padding-left:10px}.pl11{padding-left:11px}.pl12{padding-left:12px}.pl13{padding-left:13px}.pl14{padding-left:14px}.pl15{padding-left:15px}.pl16{padding-left:16px}.pl17{padding-left:17px}.pl18{padding-left:18px}.pl19{padding-left:19px}.pl20{padding-left:20px}/*padding 下内边距*/.pb1{padding-bottom:1px}.pb2{padding-bottom:2px}.pb3{padding-bottom:3px}.pb4{padding-bottom:4px}.pb5{padding-bottom:5px}.pb6{padding-bottom:6px}.pb7{padding-bottom:7px}.pb8{padding-bottom:8px}.pb9{padding-bottom:9px}.pb10{padding-bottom:10px}.pb11{padding-bottom:11px}.pb12{padding-bottom:12px}.pb13{padding-bottom:13px}.pb14{padding-bottom:14px}.pb15{padding-bottom:15px}.pb16{padding-bottom:16px}.pb17{padding-bottom:17px}.pb18{padding-bottom:18px}.pb19{padding-bottom:19px}.pb20{padding-bottom:20px}/*padding 上内边距*/.pt1{padding-top:1px}.pt2{padding-top:2px}.pt3{padding-top:3px}.pt4{padding-top:4px}.pt5{padding-top:5px}.pt6{padding-top:6px}.pt7{padding-top:7px}.pt8{padding-top:8px}.pt9{padding-top:9px}.pt10{padding-top:10px}.pt11{padding-top:11px}.pt12{padding-top:12px}.pt13{padding-top:13px}.pt14{padding-top:14px}.pt15{padding-top:15px}.pt16{padding-top:16px}.pt17{padding-top:17px}.pt18{padding-top:18px}.pt19{padding-top:19px}.pt20{padding-top:20px}/*padding 右内边距*/.pr1{padding-right:1px}.pr2{padding-right:2px}.pr3{padding-right:3px}.pr4{padding-right:4px}.pr5{padding-right:5px}.pr6{padding-right:6px}.pr7{padding-right:7px}.pr8{padding-right:8px}.pr9{padding-right:9px}.pr10{padding-right:10px}.pr11{padding-right:11px}.pr12{padding-right:12px}.pr13{padding-right:13px}.pr14{padding-right:14px}.pr15{padding-right:15px}.pr16{padding-right:16px}.pr17{padding-right:17px}.pr18{padding-right:18px}.pr19{padding-right:19px}.pr20{padding-right:20px}/*margin*/.m1{margin:1px}.m2{margin:2px}.m3{margin:3px}.m4{margin:4px}.m5{margin:5px}.m6{margin:6px}.m7{margin:7px}.m8{margin:8px}.m9{margin:9px}.m10{margin:10px}.m11{margin:11px}.m12{margin:12px}.m13{margin:13px}.m14{margin:14px}.m15{margin:15px}.m16{margin:16px}.m17{margin:17px}.m18{margin:18px}.m19{margin:19px}.m20{margin:20px}/*margin 左外边距*/.ml1{margin-left:1px}.ml2{margin-left:2px}.ml3{margin-left:3px}.ml4{margin-left:4px}.ml5{margin-left:5px}.ml6{margin-left:6px}.ml7{margin-left:7px}.ml8{margin-left:8px}.ml9{margin-left:9px}.ml10{margin-left:10px}.ml11{margin-left:11px}.ml12{margin-left:12px}.ml13{margin-left:13px}.ml14{margin-left:14px}.ml15{margin-left:15px}.ml16{margin-left:16px}.ml17{margin-left:17px}.ml18{margin-left:18px}.ml19{margin-left:19px}.ml20{margin-left:20px}/*margin 下外边距*/.mb1{margin-bottom:1px}.mb2{margin-bottom:2px}.mb3{margin-bottom:3px}.mb4{margin-bottom:4px}.mb5{margin-bottom:5px}.mb6{margin-bottom:6px}.mb7{margin-bottom:7px}.mb8{margin-bottom:8px}.mb9{margin-bottom:9px}.mb10{margin-bottom:10px}.mb11{margin-bottom:11px}.mb12{margin-bottom:12px}.mb13{margin-bottom:13px}.mb14{margin-bottom:14px}.mb15{margin-bottom:15px}.mb16{margin-bottom:16px}.mb17{margin-bottom:17px}.mb18{margin-bottom:18px}.mb19{margin-bottom:19px}.mb20{margin-bottom:20px}/*margin 上外边距*/.mt1{margin-top:1px}.mt2{margin-top:2px}.mt3{margin-top:3px}.mt4{margin-top:4px}.mt5{margin-top:5px}.mt6{margin-top:6px}.mt7{margin-top:7px}.mt8{margin-top:8px}.mt9{margin-top:9px}.mt10{margin-top:10px}.mt11{margin-top:11px}.mt12{margin-top:12px}.mt13{margin-top:13px}.mt14{margin-top:14px}.mt15{margin-top:15px}.mt16{margin-top:16px}.mt17{margin-top:17px}.mt18{margin-top:18px}.mt19{margin-top:19px}.mt20{margin-top:20px}/*margin 右外边距*/.mr1{margin-right:1px}.mr2{margin-right:2px}.mr3{margin-right:3px}.mr4{margin-right:4px}.mr5{margin-right:5px}.mr6{margin-right:6px}.mr7{margin-right:7px}.mr8{margin-right:8px}.mr9{margin-right:9px}.mr10{margin-right:10px}.mr11{margin-right:11px}.mr12{margin-right:12px}.mr13{margin-right:13px}.mr14{margin-right:14px}.mr15{margin-right:15px}.mr16{margin-right:16px}.mr17{margin-right:17px}.mr18{margin-right:18px}.mr19{margin-right:19px}.mr20{margin-right:20px}/*字体大小*/.f10{font-size:10px}.f11{font-size:11px}.f12{font-size:12px}.f13{font-size:13px}.f14{font-size:14px}.f15{font-size:15px}.f16{font-size:16px}.f17{font-size:17px}.f18{font-size:18px}.f19{font-size:19px}.f20{font-size:20px}.f21{font-size:21px}.f22{font-size:22px}.f23{font-size:23px}.f24{font-size:24px}.f25{font-size:25px}.f26{font-size:26px}.f27{font-size:27px}.f28{font-size:28px}.f29{font-size:29px}.f30{font-size:30px}.f31{font-size:31px}.f32{font-size:32px}.f33{font-size:33px}.f34{font-size:34px}.f35{font-size:35px}/*页面线和颜色*/.border,.solid{border:1px solid #DDD;}.dashed{border:1px dashed #DDD;}.dotted{border:1px dotted #DDD;}.auto{margin:0px auto}/*信息提示*/.error,.alert,.notice,.success,.info{margin-bottom:15px;border:1px solid #ddd;padding:10px;}.error,.alert{background:#fbe3e4;color:#8a1f11;border-color:#fbc2c4;}.notice{background:#fff6bf;color:#514721;border-color:#ffd324;}.success{background:#e6efc2;color:#264409;border-color:#c6d880;}.info{background:#d5edf8;color:#205791;border-color:#92cae4;}.error a,.alert a{color:#8a1f11;}.notice a{color:#514721;}.success a{color:#264409;}.info a{color:#205791;}
+
+/*表单*/
+input[type=text],input[type=password],input[type=url],input[type=email],textarea{background:#fff;border-left:1px solid #999;border-top:1px solid #999;border-bottom:1px solid #999;border-right:1px solid #999;}
+input[type=text]:focus,input[type=password]:focus,input[type=url]:focus,input[type=email]:focus,textarea:focus{border-color:#92cae4;}
+SELECT{font-family:Arial,Helvetica,sans-serif;BORDER:#999 1px solid;PADDING-BOTTOM:4px;PADDING-LEFT:4px;PADDING-RIGHT:4px;BACKGROUND:#ffffff;COLOR:#333;VERTICAL-ALIGN:middle;PADDING-TOP:4px;height:28px;line-height:28px;margin-right:5px;}
+input,.input{font-size:12px;height:18px;line-height:18px;padding:4px 5px 4px 5px;_padding:3px 5px 3px 5px; margin-right:5px;VERTICAL-ALIGN:middle}
+input[type=radio],input[type=checkbox]{font-size:12px;font-family:Arial,Helvetica,sans-serif;height:16px;line-height:16px;margin:0px 5px;padding:0px;VERTICAL-ALIGN:middle;}
+textarea{background:#fff;font-size:12px;line-height:20px;font-family:Arial,Helvetica,sans-serif;padding:5px;margin-right:5px;}
+a:focus,a:hover{color:#09f;}
+
+/*INPUT,A按键风格，兼容IE789,FF,遨游,chrome*/
+input.button,button.button{/*为IE6下按键调用风格*/
+display:inline;CURSOR:pointer;
+BORDER:#999 1px solid;
+BACKGROUND:#f7f7f7;
+height:28px;
+font-size:12px;color:#000;
+font-weight:700;
+padding:0px 15px;
+margin:0px;
+overflow: visible;
+width: auto;
+text-align:center;
+margin-right:5px;}
+@-moz-document url-prefix(){input.button,input[type="submit"],input[type="reset"],input[type="button"]{padding-bottom:3px!important;padding:0px 12px;}}
+input.button:hover,button.button:hover{BACKGROUND:#3071bf;BORDER:#005d9f 1px solid;COLOR:#fff}
+A.button{position:relative;display:inline-block;CURSOR:pointer;text-decoration:none !important;BORDER:#999 1px solid;PADDING-LEFT:8px;PADDING-RIGHT:8px;font-size:12px;font-weight:700;color:#000;BACKGROUND:#f7f7f7;HEIGHT:26px;text-align:center;line-height:26px;margin-right:0px;top:1px;top:0px\9;}
+A.button:hover{BACKGROUND:#3071bf; BORDER:#005d9f 1px solid;COLOR:#fff}
+
+/*表单框架*/
+.form_box th {
+	text-align:right;
+	padding-right:5px;
+	width:100px;
+	background:#f5f5f5;
+	border-bottom:1px solid #fff;
+}
+.form_box td {
+	padding:5px;
+	border-bottom:1px solid #fff;
+}
+.form_box p {
+	CLEAR:both;
+}
+.form_box label {
+	CLEAR:both;
+	display:block;
+	height:28px; line-height:28px;
+}
+.form_box h3 {
+	font-size:12px;
+	margin:0px;
+	height:28px; line-height:28px;
+	VERTICAL-ALIGN:middle;
+}
+
+/*表单底部提交外框*/
+.btn{CLEAR:both;background:#eee; CLEAR:both; padding:5px; text-align:center}
+.list_btn{CLEAR:both;background:#eee; padding:5px 10px; text-align:left;}
+
+/*列表样式，list_t代表分割线在头部，list_b代表分割线在底部*/
+.list_t th,.list_b th {background:#eee;padding:5px 8px;text-align:left!important}
+.list_b td {border-bottom:1px solid #eee;padding:8px 8px;text-align:left!important}
+.list_t td {border-top:1px solid #eee;padding:8px 8px;text-align:left!important}
+
+/*表格*/
+.table{background:#CCC;}
+.table table{BORDER-COLLAPSE:separate; border-spacing:1px;}
+.table th{ background:#eee;padding:5px 8px;}
+.table td{ background:#fff;padding:5px 8px;}
+
+/*tab表格*/
+UL.tab {
+	POSITION:relative;
+	PADDING-BOTTOM:0px;
+	PADDING-LEFT:0px;
+	BOTTOM:-1px;
+	PADDING-RIGHT:0px;
+	HEIGHT:30px;
+	PADDING-TOP:0px}
+UL.tab LI {
+	BORDER-BOTTOM:#dbe1e6 1px solid;
+	BORDER-LEFT:#dbe1e6 1px solid;
+	LINE-HEIGHT:28px;
+	FLOAT:left;
+	HEIGHT:28px;
+	BORDER-TOP:#dbe1e6 1px solid;
+	CURSOR:pointer;
+	MARGIN-RIGHT:5px;
+	BORDER-RIGHT:#dbe1e6 1px solid}
+UL.tab LI {
+	PADDING-BOTTOM:0px;
+	PADDING-LEFT:10px;
+	PADDING-RIGHT:10px;
+	PADDING-TOP:0px;
+	BACKGROUND:#f7f7fa;
+}
+UL.tab LI.hover {
+	POSITION:relative;
+	BACKGROUND:#fff;
+	BORDER-BOTTOM-WIDTH:0px;
+	HEIGHT:29px;
+	FONT-WEIGHT:700;
+	_height:29px
+}
