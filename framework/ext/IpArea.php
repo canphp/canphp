@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 /**
 获取ip地址的地理位置信息
 需要ip数据库的支持，ip数据库请自行到cp官网http://www.canphp.com下载
@@ -273,4 +274,3 @@ if (!function_exists('auto_charset'))
 		}
 	}
 }
-?>

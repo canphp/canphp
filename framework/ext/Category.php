@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 /*
 功能:无限分类。
 作者：单骑闯天下 QQ:404352772;
@@ -174,5 +175,3 @@ class Category
 	}
 
 }
-
-?>

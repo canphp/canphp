@@ -1,18 +1,16 @@
 <?php
-//数据采集，doGET,doPOST,文件下载，
-class Http
-{
+namespace framework\ext;
+
+class Http{
 	static public $way=0;
 	//手动设置访问方式
-	static public function setWay($way)
-	{
+	static public function setWay($way){
 		self::$way=intval($way);
 	}
-	static public function getSupport()
-	{	
+	
+	static public function getSupport(){	
 		//如果指定访问方式，则按指定的方式去访问
-		if(isset(self::$way)&&in_array(self::$way,array(1,2,3)))
-			return self::$way;
+		if( isset(self::$way) && in_array(self::$way, array(1,2,3)) ) return self::$way;
 			
 		//自动获取最佳访问方式	
 		if(function_exists('curl_init'))//curl方式
@@ -502,5 +500,3 @@ if(!function_exists('image_type_to_extension'))
    }
 
 }
-
-?>

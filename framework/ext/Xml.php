@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 //xml解析成数组
 class Xml
 {
@@ -59,4 +60,3 @@ class Xml
 		return $child;
 	}
 }
-?>

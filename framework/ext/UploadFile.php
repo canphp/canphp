@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 //上传类
 class UploadFile {
 	public $maxSize = 10485760; // 上传文件的最大值，默认10M
@@ -158,4 +159,3 @@ class UploadFile {
 		return $this->errorMsg;
 	}
 }
-?>

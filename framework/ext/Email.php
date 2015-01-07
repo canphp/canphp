@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 //邮件发送类,基于PHPMailer类
 class Email
 {
@@ -100,4 +101,3 @@ class Email
 		}
 	}
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 //表单验证类
 class Check
 {
@@ -173,4 +174,3 @@ class Check
 
 	}
 }
-?>

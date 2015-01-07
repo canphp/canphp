@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 //多语言支持类
 class Lang
 {
@@ -104,4 +105,3 @@ class Lang
 			return $lang_array;
 	}
 }
-?>

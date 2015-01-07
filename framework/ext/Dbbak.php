@@ -1,4 +1,5 @@
- <?php
+<?php
+namespace framework\ext;
  /**
   * 内置MYSQL连接，只需要简单配置数据连接
  使用方法如下
@@ -278,5 +279,3 @@ class Dbbak {
 	}
 
 }
-
-?>

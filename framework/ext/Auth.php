@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 //权限认证类
 class Auth
 {
@@ -285,4 +286,3 @@ class Auth
 		return $power;//返回权限值
 	}
 }
-?>

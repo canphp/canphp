@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 //分页类，提供四种显示样式，和ajax支持
 class Page 
  {		
@@ -371,4 +372,3 @@ private function _requestUri()
 		}
 	}
 }
-?>

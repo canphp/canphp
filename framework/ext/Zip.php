@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 class Zip
 {
 	protected $datasec = array();
@@ -367,4 +368,3 @@ class Zip
 
 
 }
-?>

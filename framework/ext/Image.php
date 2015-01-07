@@ -1,4 +1,6 @@
 <?php
+namespace framework\ext;
+
 //生成图像缩略图和生成验证码
 class Image {
 	//生成图像验证码
@@ -216,4 +218,3 @@ class Image {
 		exit;
     }
 }
-?>

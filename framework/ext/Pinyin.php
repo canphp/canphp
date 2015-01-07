@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 /*
 汉字转化为拼音类
  */
@@ -521,4 +522,3 @@ class Pinyin{
 		}
 	}
 }
-?>

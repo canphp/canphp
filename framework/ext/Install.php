@@ -1,4 +1,5 @@
 <?php
+namespace framework\ext;
 //数据库安装类,用于导入mysql数据库文件
 class Install{
 
@@ -66,4 +67,3 @@ class Install{
 		return $result;
     }
 }
-?>
