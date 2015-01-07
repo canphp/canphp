@@ -52,6 +52,10 @@ class Config {
 			
 			'CACHE'=>array(
 				'default'=>array('CACHE_TYPE'=>'FileCache', 'CACHE_PATH'=>$basePath . 'data/cache/'),
+			),
+			
+			'STORAGE'=>array(
+				'default'=>array('STORAGE_TYPE'=>'File'),
 			),				
 		);
 	}

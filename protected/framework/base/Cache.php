@@ -13,7 +13,7 @@ class Cache{
 		}
 		$this->config = Config::get('CACHE.' . $this->cache);
 		if( empty($this->config) || !isset($this->config['CACHE_TYPE']) ) {
-			throw new Exception($this->cache.' cache config error', 500);
+			throw new \Exception($this->cache.' cache config error', 500);
 		}
     }
 

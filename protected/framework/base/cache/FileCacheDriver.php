@@ -715,6 +715,6 @@ class FileCacheDriver implements CacheInterface{
     }
 
     protected function trigger_error($errstr,$errno){
-		throw new Exception($errstr);//输出错误信息
+		throw new \Exception($errstr);//输出错误信息
     }
 }

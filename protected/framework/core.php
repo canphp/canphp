@@ -1,9 +1,9 @@
 <?php	
 if( !defined('ROOT_PATH') ) define('ROOT_PATH', realpath('./').DIRECTORY_SEPARATOR);
 if( !defined('BASE_PATH') ) define('BASE_PATH', realpath('./protected').DIRECTORY_SEPARATOR);
+if( !defined('CONFIG_PATH') ) define('CONFIG_PATH', BASE_PATH.'data/config/');
 if( !defined('ROOT_URL') ) define('ROOT_URL',  rtrim(dirname($_SERVER["SCRIPT_NAME"]), '\\/').'/');
 if( !defined('PUBLIC_URL') ) define('PUBLIC_URL', ROOT_URL . 'public/');
-if( !defined('CONFIG_PATH') ) define('CONFIG_PATH', BASE_PATH.'data/config/');
 
 use framework\base\Config;
 use framework\base\Route;
@@ -22,24 +22,48 @@ function url($route='default/index', $params=array()){
 }
 
 function model($model, $app='', $forceInstance=false){
+	return obj($model, $app, '', '', $forceInstance);
+}
+
+function obj($class, $app='', $args=array(), $file='', $forceInstance=false){
 	static $objArr = array();
 	if( empty($app) ) $app = APP_NAME;
+
+	if( isset($objArr[$class]) && false==$forceInstance ) return $objArr[$class];
+	if( !empty($file) ) require_once($file);
+		
+	$nsArr = array(
+		"", //global
+		"\\app\\{$app}\\model",
+		"\\app\\{$app}\\lib",
+		"\\app\\{$app}\\controller",
+		"\\framework\\ext",
+		"\\framework\\base",
+	);
 	
-	$class = "\\app\\{$app}\\model\\{$model}";
-	if( isset($objArr[$class]) && false==$forceInstance ){
-		return $objArr[$class];
+	foreach($nsArr as $ns){
+		$nsClass = $ns.'\\'.$class;
+		
+		if( class_exists($nsClass) ){
+			if(empty($args)){
+				$objArr[$class]=new $nsClass();
+			}else{
+				$objArr[$class]=call_user_func_array(array(new ReflectionClass($nsClass), 'newInstance'), $args);
+			}		
+		} 
 	}
-	if( !class_exists($class) ) {
-		throw new \Exception("Model '{$class}' not found'", 500);
-	}		
-	return $objArr[$class] = new $class();
+	if( !isset($objArr[$class]) ) throw new \Exception("Class '{$class}' not found'", 500);
+	
+	return $objArr[$class];
 }
+
 
 spl_autoload_register(function($class){
 	static $fileList = array();
 	$prefixes =array(
 		'framework' => realpath(__DIR__.'/../').DIRECTORY_SEPARATOR,
 		'app' => BASE_PATH,
+		'*'=>BASE_PATH,
 	);
 
 	$class = ltrim($class, '\\');
@@ -48,9 +72,7 @@ spl_autoload_register(function($class){
 		$className = substr($class, $pos + 1);
 		
 		foreach ($prefixes as $prefix => $baseDir){
-			if (0 !== strpos($namespace, $prefix)){
-				continue;
-			}
+			if ( '*'!==$prefix && 0!==strpos($namespace, $prefix) ) continue;
 			
 			//file path case-insensitive
 			$fileDIR = $baseDir.str_replace('\\', DIRECTORY_SEPARATOR, $namespace).DIRECTORY_SEPARATOR;
