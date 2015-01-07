@@ -2,9 +2,9 @@
 <HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD>
 <TITLE>{$title}</TITLE>
 <META content="text/html; charset=utf-8" http-equiv=Content-Type>
-<LINK rel=stylesheet type=text/css href="__PUBLIC__/admin/images/admin_style.css">
-<SCRIPT type=text/javascript src="__PUBLIC__/js/jquery.js"></SCRIPT>
-<SCRIPT type=text/javascript src="__PUBLIC__/admin/js/jquery.layout.js"></SCRIPT>
+<LINK rel=stylesheet type=text/css href="{PUBLIC_URL}admin/images/admin_style.css">
+<SCRIPT type=text/javascript src="{PUBLIC_URL}js/jquery.js"></SCRIPT>
+<SCRIPT type=text/javascript src="{PUBLIC_URL}admin/js/jquery.layout.js"></SCRIPT>
 <SCRIPT type="text/javascript">
 var myLayout;
 $(document).ready(function(){
@@ -28,20 +28,20 @@ $(document).ready(function(){
 <DIV class=ui-layout-west>
 
 <DIV id=menu>
-	  {loop $leftMenu $menu}
+	  {foreach $leftMenu as $menu}
 		{if !empty($menu['list'])}
           <DIV class="menubg_1 cursor">{$menu['title']}</DIV>
           <UL class=none>
-		  	{loop $menu['list'] $name $url}
+		  	{foreach $menu['list'] as $name => $url}
 		  		<LI><A href="{$url}"  target="main">{$name}</A> </LI>
-			{/loop}
+			{/foreach}
           </UL>
 		{/if}
-	{/loop}
+	{/foreach}
 		  </DIV> </DIV> 
           
 <DIV class=ui-layout-center>
-<IFRAME style="OVERFLOW: visible" id="main" height="100%" src="{url('index/welcome')}" frameBorder=0 width="100%" name="main" scrolling=yes> </IFRAME>
+<IFRAME style="OVERFLOW: visible" id="main" height="100%" src="{url('default/welcome')}" frameBorder=0 width="100%" name="main" scrolling=yes> </IFRAME>
 </DIV>
 
 <SCRIPT language=javascript> 

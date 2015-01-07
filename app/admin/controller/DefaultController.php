@@ -1,9 +1,12 @@
 <?php
 namespace app\admin\controller;
+use framework\ext\Image;
+use framework\ext\Check;
+
 class DefaultController extends \app\base\controller\AdminController{
 	
 	public function index(){
-		$this->leftMenu = api('*', 'getMenu');
+		//$this->leftMenu = api('*', 'getMenu');
 		$this->title = config('admin_title'); 
 		$this->display();
 	}
@@ -50,7 +53,7 @@ class DefaultController extends \app\base\controller\AdminController{
 	
 	//退出登录
 	public function logout(){
-		$this->clearLogin( url('index/login') );
+		$this->clearLogin( url('default/login') );
 	}
 	
 	//生成验证码

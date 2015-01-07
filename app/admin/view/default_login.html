@@ -3,8 +3,8 @@
 <head>
 <title>{$title}</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<link rel="stylesheet" type="text/css" href="__PUBLIC__/admin/images/admin_style.css" />
-<script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="{PUBLIC_URL}admin/images/admin_style.css" />
+<script type="text/javascript" src="{PUBLIC_URL}js/jquery.js"></script>
 </head>
 <body style="MARGIN: 0px" scroll="no">
 <div class="login_title">{$title}</div>
@@ -48,13 +48,14 @@
 <script type="text/javascript">
 $(function(){
 	if(self != top){
-		parent.location.href = "{url('index/login')}";
+		parent.location.href = "{url('default/login')}";
 	}
 	
 	//刷新验证码
 	$("#verifyImg").click(function(){
 		var url = $(this).attr('src');
 		url = url + ((/\?/.test(url)) ? '&' : '?' ) + new Date().getTime();
+		//alert(url);
 		$(this).attr('src', url)
 	});
 	
@@ -78,11 +79,11 @@ $(function(){
 		}		
 		$('#tips').html('正在登录中……');
 		
-		$.post("{url('index/login')}",
+		$.post("{url('default/login')}",
 				{'username':username, 'password':password, 'checkcode':checkcode},
 				function(json){
 					if(json.status ==1){
-						window.location.href = "{url('index/index')}";
+						window.location.href = "{url('default/index')}";
 					}else{
 						$('#tips').html(json.msg);
 						$('#tips').show();
