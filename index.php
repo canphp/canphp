@@ -1,2 +1,2 @@
 <?php
-require( __DIR__ . '/protected/framework/core.php' );
+require( 'framework/core.php' );
