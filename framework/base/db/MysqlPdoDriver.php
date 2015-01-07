@@ -157,7 +157,7 @@ class MysqlPdoDriver implements DbInterface {
 		if( !isset( $this->readLink ) ) {
 			try{
 				$this->readLink = $this->_connect( false );
-			}catch(Exception $e){
+			}catch( \Exception $e){
 				$this->readLink = $this->_getWriteLink();
 			}			
 		}

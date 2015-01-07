@@ -13,7 +13,7 @@ class Model{
 		}
 		$this->config = Config::get('DB.' . $this->database);
 		if( empty($this->config) || !isset($this->config['DB_TYPE']) ) {
-			throw new Exception($this->database.' database config error', 500);
+			throw new \Exception($this->database.' database config error', 500);
 		}
 		$this->table($this->table);
     }
