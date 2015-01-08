@@ -2,7 +2,14 @@
 namespace framework\base;
 class Model{
 	protected $config =array();
-    protected $options = array('field'=>'*','where'=>array(),'order'=>'','limit'=>'','data'=>array());
+    protected $options = array(
+							'table'=>'',
+							'field'=>'*',
+							'where'=>array(),
+							'order'=>'',
+							'limit'=>'',
+							'data'=>array()
+					);
 	protected $database = 'default';	
 	protected $table = '';
 	protected static $objArr = array();
@@ -38,10 +45,7 @@ class Model{
 		return isset($data[0]) ? $data[0] : array();
      }	 
 
-     public function select() {
-		$condition = $this->options['where'];
-		$this->options['where'] = '';
-		
+     public function select() {		
 		$field = $this->options['field'];
 		if( empty($field) ) $field  = '*'; 
 		$this->options['field'] = '*';
@@ -52,54 +56,34 @@ class Model{
 		$limit = $this->options['limit'];
 		$this->options['limit'] = '';
 		
-		return $this->getDb()->select($this->table, $condition, $field, $order, $limit);		
+		return $this->getDb()->select($this->_getTable(), $this->_getWhere(), $field, $order, $limit);		
      }
 	
     public function insert() {
-		if( empty($this->options['data']) || !is_array($this->options['data']) ){ 
-			return false;
-		}		
-		$data = $this->options['data'];
-		$this->options['data']= array();		
-		return $this->getDb()->insert($this->table, $data);
+		if( empty($this->options['data']) || !is_array($this->options['data']) ) return false;
+		
+		return $this->getDb()->insert($this->_getTable(), $this->_getData();
     }
 	
     public function update() {
-		if( empty($this->options['where']) ) {
-			return false;
-		}	
-		if( empty($this->options['data']) || !is_array($this->options['data']) ) {
-			return false;
-		}
-		
-		$condition = $this->options['where'];
-		$this->options['where']= '';
-		
-		$data = $this->options['data'];
-		$this->options['data']= array();	
-
-		return $this->getDb()->update($this->table, $condition, $data);
+		if( empty($this->options['where']) || !is_array($this->options['where'])  ) return false;
+		if( empty($this->options['data']) || !is_array($this->options['data']) ) return false;
+				
+		return $this->getDb()->update($this->_getTable(), $this->_getWhere(), $this->_getData());
     }
 	
     public function delete() {
-		if( empty($this->options['where']) ) {
-			return false;
-		}	
-		
-		$condition = $this->options['where'];
-		$this->options['where']= array();	
+		if( empty($this->options['where']) || !is_array($this->options['where'])  ) return false;
 
-		return $this->getDb()->delete($this->table, $condition);
+		return $this->getDb()->delete($this->_getTable(), $this->_getWhere());
     }
 
 	public function count() {
-		$condition = $this->options['where'];
-		$this->options['where']= '';	
-		return $this->getDb()->count($this->table, $condition);
+		return $this->getDb()->count($this->_getTable(), $this->_getWhere());
 	}
 	
 	public function getFields() {
-		return $this->getDb()->getFields($this->table);
+		return $this->getDb()->getFields( $this->_getTable() );
 	}
 	
     public function getSql() {
@@ -119,10 +103,15 @@ class Model{
     }
 
 	public function table($table, $ignorePre = false) {
-		$this->table = $ignorePre ? $table : $this->config['DB_PREFIX'] . $table;
+		$this->options['table'] = $ignorePre ? $table : $this->config['DB_PREFIX'] . $table;
 		return $this;
 	}
 
+	public function join($join, $way='left'){
+		$this->options['table'] = " {$this->options['table']} {$way} join {$join} ";
+		return $this;
+	}
+	
 	public function field($field) {
 		$this->options['field'] = $field;
 		return $this;
@@ -166,5 +155,23 @@ class Model{
 			self::$objArr[$this->database] = new $dbDriver( $this->config );
 		}
 		return self::$objArr[$this->database];
-	}	
+	}
+
+	private function _getTable(){
+		$table = $this->options['table'];
+		$this->options['table'] = $this->table;
+		return $table;
+	}
+
+	private function _getWhere(){
+		$where = $this->options['where'];
+		$this->options['where']= array();	
+		return $where;
+	}
+
+	private function _getData(){
+		$data = $this->options['data'];
+		$this->options['data']= array();
+		return $data;
+	}		
 }
