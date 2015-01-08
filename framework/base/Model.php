@@ -2,7 +2,7 @@
 namespace framework\base;
 class Model{
 	protected $config =array();
-    protected $options = array(
+	protected $options = array(
 							'table'=>'',
 							'field'=>'*',
 							'where'=>array(),
@@ -14,7 +14,7 @@ class Model{
 	protected $table = '';
 	protected static $objArr = array();
 	
-    public function __construct( $database = 'default' ) {
+	public function __construct( $database = 'default' ) {
 		if( $database ){
 			$this->database = $database;
 		}
@@ -25,27 +25,27 @@ class Model{
 		$this->table($this->table);
     }
 			
-    public function query($sql, $params = array()) {
+	public function query($sql, $params = array()) {
         $sql = trim($sql);
 		if ( empty($sql) ) return array();
 		$sql = str_replace('{pre}', $this->config['DB_PREFIX'], $sql);
 		return $this->getDb()->query($sql, $params);	
     }
 
-    public function execute($sql, $params = array()) {
+	public function execute($sql, $params = array()) {
         $sql = trim($sql);
 		if ( empty($sql) ) return 0;
 		$sql = str_replace('{pre}', $this->config['DB_PREFIX'], $sql);
 		return $this->getDb()->execute($sql, $params); 
     }
 	
-    public function find() {
+	public function find() {
 		$this->limit(1);
 		$data = $this->select();
 		return isset($data[0]) ? $data[0] : array();
      }	 
 
-     public function select() {		
+	public function select() {		
 		$field = $this->options['field'];
 		if( empty($field) ) $field  = '*'; 
 		$this->options['field'] = '*';
@@ -59,13 +59,13 @@ class Model{
 		return $this->getDb()->select($this->_getTable(), $this->_getWhere(), $field, $order, $limit);		
      }
 	
-    public function insert() {
+	public function insert() {
 		if( empty($this->options['data']) || !is_array($this->options['data']) ) return false;
 		
 		return $this->getDb()->insert($this->_getTable(), $this->_getData());
     }
 	
-    public function update() {
+	public function update() {
 		if( empty($this->options['where']) || !is_array($this->options['where'])  ) return false;
 		if( empty($this->options['data']) || !is_array($this->options['data']) ) return false;
 				
@@ -86,21 +86,21 @@ class Model{
 		return $this->getDb()->getFields( $this->_getTable() );
 	}
 	
-    public function getSql() {
-        return $this->getDb()->getSql();
-    }
+	public function getSql() {
+	return $this->getDb()->getSql();
+	}
 
 	public function beginTransaction() {
-        return $this->getDb()->beginTransaction();
-    }
+		return $this->getDb()->beginTransaction();
+	}
 	
 	public function commit() {
-        return $this->getDb()->commit();
-    }
+		return $this->getDb()->commit();
+	}
 	
 	public function rollBack() {
-        return $this->getDb()->rollBack();
-    }
+		return $this->getDb()->rollBack();
+	}
 
 	public function table($table, $ignorePre = false) {
 		$this->options['table'] = $ignorePre ? $table : $this->config['DB_PREFIX'] . $table;
@@ -145,7 +145,7 @@ class Model{
 		return $cache;
 	}
 	
-    public function clear() {
+	public function clear() {
 		$cache = new Cache($this->config['DB_CACHE']);
 		return $cache->clear();
     }
