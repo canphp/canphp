@@ -108,6 +108,7 @@ class Model{
 	}
 
 	public function join($join, $way='left'){
+		$join = str_replace('{pre}', $this->config['DB_PREFIX'], $join);
 		$this->options['table'] = " {$this->options['table']} {$way} join {$join} ";
 		return $this;
 	}

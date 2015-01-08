@@ -14,8 +14,9 @@ class MysqlDriver implements DbInterface{
 		$field = !empty($field) ? $field : '*';
 		$order = !empty($order) ? ' ORDER BY '.$order : '';
 		$limit = !empty($limit) ? ' LIMIT '.$limit : '';
+		$table = $this->_table($table);
 		$condition = $this->_where($condition);
-		return $this->query("SELECT {$field} FROM `{$table}` {$condition['_where']} {$order} {$limit}", $condition['_bindParams']);		
+		return $this->query("SELECT {$field} FROM {$table} {$condition['_where']} {$order} {$limit}", $condition['_bindParams']);		
 	}
 	
 	public function query($sql, array $params = array()){
@@ -47,7 +48,8 @@ class MysqlDriver implements DbInterface{
 			$values[":{$k}"] = $v; 
 			$marks[] = ":{$k}";
 		}
-		$this->execute("INSERT INTO `{$table}` (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
+		$table = $this->_table($table);
+		$this->execute("INSERT INTO {$table} (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
 		return mysql_insert_id( $this->_getWriteLink() );
 	}
 	
@@ -58,24 +60,28 @@ class MysqlDriver implements DbInterface{
 			$keys[] = "`{$k}`=:__{$k}";
 			$values[":__{$k}"] = $v;			
 		}
+		$table = $this->_table($table);
 		$condition = $this->_where( $condition );
-		return $this->execute("UPDATE `{$table}` SET ".implode(', ', $keys) . $condition['_where'], $condition['_bindParams'] + $values);
+		return $this->execute("UPDATE {$table} SET ".implode(', ', $keys) . $condition['_where'], $condition['_bindParams'] + $values);
 	}
 	
 	public function delete($table, array $condition = array() ){
 		if( empty($condition) ) return false;
+		$table = $this->_table($table);
 		$condition = $this->_where( $condition );
-		return $this->execute("DELETE FROM `{$table}` {$condition['_where']}", $condition['_bindParams']);
+		return $this->execute("DELETE FROM {$table} {$condition['_where']}", $condition['_bindParams']);
 	}
 
 	public function count($table, array $condition = array()) {
+		$table = $this->_table($table);
 		$condition = $this->_where( $condition );
-		$count = $this->query("SELECT COUNT(*) AS __total FROM `{$table}` ".$condition['_where'], $condition['_bindParams']);
+		$count = $this->query("SELECT COUNT(*) AS __total FROM {$table} ".$condition['_where'], $condition['_bindParams']);
 		return isset($count[0]['__total']) && $count[0]['__total'] ? $count[0]['__total'] : 0;
 	}
 	
 	public function getFields($table) {
-		return  $this->query("SHOW FULL FIELDS FROM `{$table}`");
+		$table = $this->_table($table);
+		return  $this->query("SHOW FULL FIELDS FROM {$table}");
 	}
 	
 	public function getSql(){
@@ -102,6 +108,10 @@ class MysqlDriver implements DbInterface{
 		$this->sqlMeta = array('sql'=>$sql, 'params'=>$params, 'link'=>$link);
 	}
 
+	private function _table($table){
+		return (false===strpos($table, ' '))? "`{$table}`": $table;
+	}
+	
 	private function _where( array $condition ){
 		$result = array( '_where' => '', '_bindParams' => array() );	 		
 		$sql = null; 
@@ -124,7 +134,7 @@ class MysqlDriver implements DbInterface{
 		return $result;
 	}
 					
-	protected  function _connect( $isMaster = true ) {
+	private  function _connect( $isMaster = true ) {
 		$dbArr = array();
 		if( false==$isMaster && !empty($this->config['DB_SLAVE']) ) {	
 			$master = $this->config;
@@ -160,7 +170,7 @@ class MysqlDriver implements DbInterface{
         return $link;
 	}
 
-    protected function _getReadLink() {
+    private function _getReadLink() {
 		if( !isset( $this->readLink ) ) {
 			try{
 				$this->readLink = $this->_connect( false );
@@ -171,7 +181,7 @@ class MysqlDriver implements DbInterface{
 		return $this->readLink;
     }
 	
-    protected function _getWriteLink() {
+    private function _getWriteLink() {
         if( !isset( $this->writeLink ) ) {
             $this->writeLink = $this->_connect( true );
         }
