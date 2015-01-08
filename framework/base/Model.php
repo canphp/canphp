@@ -9,7 +9,7 @@ class Model{
 							'order'=>'',
 							'limit'=>'',
 							'data'=>array()
-						);
+				);
 	protected $database = 'default';	
 	protected $table = '';
 	protected static $objArr = array();
@@ -26,14 +26,14 @@ class Model{
 	}
 			
 	public function query($sql, $params = array()) {
-        $sql = trim($sql);
+		$sql = trim($sql);
 		if ( empty($sql) ) return array();
 		$sql = str_replace('{pre}', $this->config['DB_PREFIX'], $sql);
 		return $this->getDb()->query($sql, $params);	
 	}
 
 	public function execute($sql, $params = array()) {
-        $sql = trim($sql);
+		$sql = trim($sql);
 		if ( empty($sql) ) return 0;
 		$sql = str_replace('{pre}', $this->config['DB_PREFIX'], $sql);
 		return $this->getDb()->execute($sql, $params); 
@@ -72,7 +72,7 @@ class Model{
 		return $this->getDb()->update($this->_getTable(), $this->_getWhere(), $this->_getData());
 	}
 	
-    public function delete() {
+	public function delete() {
 		if( empty($this->options['where']) || !is_array($this->options['where'])  ) return false;
 
 		return $this->getDb()->delete($this->_getTable(), $this->_getWhere());
