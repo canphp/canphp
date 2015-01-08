@@ -139,7 +139,6 @@ class MysqlDriver implements DbInterface{
 		
 		$link =null;
 		foreach($dbArr as $db) {
-			print_r($db);
 			if( $link = @mysql_connect($db['DB_HOST'] . ':' . $db['DB_PORT'], $db['DB_USER'], $db['DB_PWD']) ){
 				break;
 			}
