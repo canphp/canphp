@@ -9,7 +9,7 @@ class Model{
 							'order'=>'',
 							'limit'=>'',
 							'data'=>array()
-					);
+						);
 	protected $database = 'default';	
 	protected $table = '';
 	protected static $objArr = array();
@@ -23,27 +23,27 @@ class Model{
 			throw new \Exception($this->database.' database config error', 500);
 		}
 		$this->table($this->table);
-    }
+	}
 			
 	public function query($sql, $params = array()) {
         $sql = trim($sql);
 		if ( empty($sql) ) return array();
 		$sql = str_replace('{pre}', $this->config['DB_PREFIX'], $sql);
 		return $this->getDb()->query($sql, $params);	
-    }
+	}
 
 	public function execute($sql, $params = array()) {
         $sql = trim($sql);
 		if ( empty($sql) ) return 0;
 		$sql = str_replace('{pre}', $this->config['DB_PREFIX'], $sql);
 		return $this->getDb()->execute($sql, $params); 
-    }
+	}
 	
 	public function find() {
 		$this->limit(1);
 		$data = $this->select();
 		return isset($data[0]) ? $data[0] : array();
-     }	 
+ 	}	 
 
 	public function select() {		
 		$field = $this->options['field'];
@@ -57,26 +57,26 @@ class Model{
 		$this->options['limit'] = '';
 		
 		return $this->getDb()->select($this->_getTable(), $this->_getWhere(), $field, $order, $limit);		
-     }
+ 	}
 	
 	public function insert() {
 		if( empty($this->options['data']) || !is_array($this->options['data']) ) return false;
 		
 		return $this->getDb()->insert($this->_getTable(), $this->_getData());
-    }
+	}
 	
 	public function update() {
 		if( empty($this->options['where']) || !is_array($this->options['where'])  ) return false;
 		if( empty($this->options['data']) || !is_array($this->options['data']) ) return false;
 				
 		return $this->getDb()->update($this->_getTable(), $this->_getWhere(), $this->_getData());
-    }
+	}
 	
     public function delete() {
 		if( empty($this->options['where']) || !is_array($this->options['where'])  ) return false;
 
 		return $this->getDb()->delete($this->_getTable(), $this->_getWhere());
-    }
+	}
 
 	public function count() {
 		return $this->getDb()->count($this->_getTable(), $this->_getWhere());
@@ -148,7 +148,7 @@ class Model{
 	public function clear() {
 		$cache = new Cache($this->config['DB_CACHE']);
 		return $cache->clear();
-    }
+	}
 	
 	protected function getDb() {
 		if( empty(self::$objArr[$this->database]) ){
