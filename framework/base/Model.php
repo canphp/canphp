@@ -62,7 +62,7 @@ class Model{
     public function insert() {
 		if( empty($this->options['data']) || !is_array($this->options['data']) ) return false;
 		
-		return $this->getDb()->insert($this->_getTable(), $this->_getData();
+		return $this->getDb()->insert($this->_getTable(), $this->_getData());
     }
 	
     public function update() {
