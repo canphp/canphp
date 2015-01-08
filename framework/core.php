@@ -13,7 +13,7 @@ function config($key=NULL, $value=NULL){
 	if( func_num_args() <= 1 ){
 		return Config::get($key);
 	}else{
-		return Config::set($key);
+		return Config::set($key, $value);
 	}
 }
 
