@@ -158,19 +158,19 @@ class Model{
 		return self::$objArr[$this->database];
 	}
 
-	private function _getTable(){
+	protected function _getTable(){
 		$table = $this->options['table'];
 		$this->options['table'] = $this->table;
 		return $table;
 	}
 
-	private function _getWhere(){
+	protected function _getWhere(){
 		$where = $this->options['where'];
 		$this->options['where']= array();	
 		return $where;
 	}
 
-	private function _getData(){
+	protected function _getData(){
 		$data = $this->options['data'];
 		$this->options['data']= array();
 		return $data;
