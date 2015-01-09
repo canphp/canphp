@@ -11,7 +11,7 @@ class Util{
 						  "",
 						);			  
 		$str = preg_replace ($search, $replace, $str);
-		$str = htmlspecialchars($str, ENT_QUOTES, 'UTF-8')
+		$str = htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 	   return $str;
 	}
 
