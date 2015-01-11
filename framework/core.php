@@ -17,7 +17,7 @@ function config($key=NULL, $value=NULL){
 	}
 }
 
-function url($route='default/index', $params=array()){
+function url($route=null, $params=array()){
 	return Route::url($route, $params);
 }
 

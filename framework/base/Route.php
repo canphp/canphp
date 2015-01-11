@@ -46,8 +46,31 @@ class Route {
 		if( !defined('ACTION_NAME') ) define('ACTION_NAME', $action_name);
 	}
 
-	static public function url($route='index/index', $params=array()){
-		if( count( explode('/', $route) ) < 3 )  $route = APP_NAME . '/' . $route;
+	static public function url($route=null, $params=array()){
+		if(empty($route)){
+			$route = APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;
+		}else{
+			$route = explode('/', $route, 3);
+			$routeNum = count($route);
+			switch ($route) {
+				case 1:
+					$app = APP_NAME;
+					$controller = CONTROLLER_NAME;
+					$action = $route[0];
+					break;
+				case 2:
+					$app = APP_NAME;
+					$controller = $route[0];
+					$action = $route[1];
+					break;
+				case 3:
+					$app = $route[0];
+					$controller = $route[1];
+					$action = $route[2];
+					break;
+			}
+			$route = $app.'/'.$controller.'/'.$action;
+		}
 		$paramStr = empty($params) ? '' : '&' . http_build_query($params);
 		$url = $_SERVER["SCRIPT_NAME"] . '?r=' . $route . $paramStr;
 			
