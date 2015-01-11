@@ -42,8 +42,8 @@ class Route {
 		$_REQUEST['r'] = $app_name .'/'. $controller_name .'/'. $action_name;
 		
 		if( !defined('APP_NAME') ) define('APP_NAME', strtolower($app_name));
-		if( !defined('CONTROLLER_NAME') ) define('CONTROLLER_NAME', strtolower($controller_name));
-		if( !defined('ACTION_NAME') ) define('ACTION_NAME', strtolower($action_name));
+		if( !defined('CONTROLLER_NAME') ) define('CONTROLLER_NAME', $controller_name);
+		if( !defined('ACTION_NAME') ) define('ACTION_NAME', $action_name);
 	}
 
 	static public function url($route='index/index', $params=array()){
