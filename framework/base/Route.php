@@ -47,19 +47,17 @@ class Route {
 	}
 
 	static public function url($route=null, $params=array()){
-		if(empty($route)){
-			$route = APP_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;
-		}else{
+		$app = APP_NAME;
+		$controller = CONTROLLER_NAME;
+		$action = ACTION_NAME;
+		if($route){
 			$route = explode('/', $route, 3);
 			$routeNum = count($route);
-			switch ($route) {
+			switch ($routeNum) {
 				case 1:
-					$app = APP_NAME;
-					$controller = CONTROLLER_NAME;
 					$action = $route[0];
 					break;
 				case 2:
-					$app = APP_NAME;
 					$controller = $route[0];
 					$action = $route[1];
 					break;
@@ -69,8 +67,8 @@ class Route {
 					$action = $route[2];
 					break;
 			}
-			$route = $app.'/'.$controller.'/'.$action;
 		}
+		$route = $app.'/'.$controller.'/'.$action;
 		$paramStr = empty($params) ? '' : '&' . http_build_query($params);
 		$url = $_SERVER["SCRIPT_NAME"] . '?r=' . $route . $paramStr;
 			
