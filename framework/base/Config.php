@@ -47,7 +47,8 @@ class Config {
 			'TPL'=>array(
 				'TPL_PATH'=> $basePath,
 				'TPL_SUFFIX'=>'.html',
-				'TPL_CACHE'=>'default',						
+				'TPL_CACHE'=>'default',
+				'TPL_DEPR'=>'_',					
 			),
 			
 			'CACHE'=>array(

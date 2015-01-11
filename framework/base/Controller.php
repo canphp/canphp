@@ -10,7 +10,7 @@ class Controller{
 	public function display($tpl = '', $return = false, $isTpl = true ){
 		if( $isTpl ){
 			if( empty($tpl) ){
-				$tpl = 'app/'.APP_NAME . '/view/' . strtolower(CONTROLLER_NAME) . '_'. strtolower(ACTION_NAME);
+				$tpl = 'app/'.APP_NAME . '/view/' . strtolower(CONTROLLER_NAME) . config('TPL.TPL_DEPR') . strtolower(ACTION_NAME);
 			}
 			if( $this->layout ){
 				$this->__template_file = $tpl;
