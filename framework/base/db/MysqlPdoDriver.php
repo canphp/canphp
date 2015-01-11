@@ -112,16 +112,20 @@ class MysqlPdoDriver implements DbInterface {
 	private function _where( array $condition ){
 		$result = array( '_where' => '', '_bindParams' => array() );	 		
 		$sql = null; 
-		if( !empty($condition[0]) ){
-			$sql = $condition[0];
-			unset($condition[0]);
-		}
-
 		$sqlArr = array();
 		$params = array();		
-		foreach( $condition as $k => $v ){				
-			$sqlArr[] = "`{$k}` = :{$k}";
-			$params[":{$k}"] = $v;	
+		foreach( $condition as $k => $v ){
+			//处理join与混合多条件
+			if(!is_numeric($k)){
+				if(strpos($k, '.')){
+					$sqlArr[] = "{$k} = :{$k}";
+				}else{
+					$sqlArr[] = "`{$k}` = :{$k}";
+				}
+				$params[":{$k}"] = $v;
+			}else{
+				$sqlArr[] = $v;
+			}
 		}
 		if(!$sql) $sql = implode(' AND ', $sqlArr);
 
