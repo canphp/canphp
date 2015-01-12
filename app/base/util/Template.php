@@ -63,7 +63,7 @@ class Template {
                 '/\{(\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/' => "<?php echo \\1;?>", 
         );
         foreach ($label as $key => $value) {
-            $template = preg_replace($key,$value);
+            $template = preg_replace($key,$value, $template);
         }
         return $template;
 	}
