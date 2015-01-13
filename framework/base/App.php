@@ -28,11 +28,11 @@ class App{
 		
 			//route ext
 			if( class_exists('RouteExt') ){
-				RouteExt::parseUrl( Config::get('REWRITE_RULE') );
+				RouteExt::parseUrl( Config::get('REWRITE_RULE'), Config::get('REWRITE_ON'));
 			}
 			//default route
 			if( !defined('APP_NAME') || !defined('CONTROLLER_NAME') || !defined('ACTION_NAME')){
-				Route::parseUrl( Config::get('REWRITE_RULE') );
+				Route::parseUrl( Config::get('REWRITE_RULE'), Config::get('REWRITE_ON') );
 			}
 			
 			//execute action

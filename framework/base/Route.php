@@ -2,10 +2,12 @@
 namespace framework\base;
 class Route {			
 	static protected $rewriteRule = array();
+	static protected $rewriteOn = false;
 	
-	static public function parseUrl( $rewriteRule ){
+	static public function parseUrl( $rewriteRule, $rewriteOn=false){
 		self::$rewriteRule = $rewriteRule;
-		if( !empty(self::$rewriteRule ) ) {
+		self::$rewriteOn = $rewriteOn;
+		if( self::$rewriteOn && !empty(self::$rewriteRule ) ) {
 			if( ($pos = strpos( $_SERVER['REQUEST_URI'], '?' )) !== false ){
 				parse_str( substr( $_SERVER['REQUEST_URI'], $pos + 1 ), $_GET );
 			}
@@ -72,7 +74,7 @@ class Route {
 		$paramStr = empty($params) ? '' : '&' . http_build_query($params);
 		$url = $_SERVER["SCRIPT_NAME"] . '?r=' . $route . $paramStr;
 			
-		if( !empty(self::$rewriteRule) ){
+		if( self::$rewriteOn && !empty(self::$rewriteRule ) ) {
 			static $urlArray = array();
 			if( !isset($urlArray[$url]) ){
 				foreach(self::$rewriteRule as $rule => $mapper){

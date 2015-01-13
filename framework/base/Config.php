@@ -10,7 +10,8 @@ class Config {
 			'LOG_ON' => false,
 			'LOG_PATH' => $basePath . 'data/log/', 
 			'TIMEZONE' => 'PRC', 
-						
+			
+			'REWRITE_ON' =>false,
 			'REWRITE_RULE' =>array(
 				//'<app>/<c>/<a>'=>'<app>/<c>/<a>',
 			),
