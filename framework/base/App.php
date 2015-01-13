@@ -1,8 +1,5 @@
 <?php
 namespace framework\base;
-use app\base\controller\ErrorController;
-use app\base\model\RouteExt;
-
 class App{
 	
 	static protected function init(){
@@ -23,13 +20,14 @@ class App{
 	}
 	
 	static public function run(){
-		try{
+		try{			
 			self::init();
-		
-			//route ext
-			if( class_exists('RouteExt') ){
-				RouteExt::parseUrl( Config::get('REWRITE_RULE'), Config::get('REWRITE_ON'));
-			}
+			
+			Hook::init(BASE_PATH);
+			Hook::listen('appBegin');
+
+			Hook::listen('routeParseUrl', array( Config::get('REWRITE_RULE'), Config::get('REWRITE_ON')));
+			
 			//default route
 			if( !defined('APP_NAME') || !defined('CONTROLLER_NAME') || !defined('ACTION_NAME')){
 				Route::parseUrl( Config::get('REWRITE_RULE'), Config::get('REWRITE_ON') );
@@ -46,16 +44,15 @@ class App{
 			if( !method_exists($obj, $action) ){
 				throw new \Exception("Action '{$controller}::{$action}()' not found", 404);
 			}
+			
+			Hook::listen('actionBefore', array($obj, $action));
 			$obj ->$action();
+			Hook::listen('actionAfter', array($obj, $action));
 			
 		} catch( \Exception $e ){
-			if( 404 == $e->getCode() ){
-				$action = 'error404';
-			}else{
-				$action = 'error';
-			}
-			$obj = new ErrorController();
-			$obj ->$action($e);
-		}		
+			Hook::listen('appError', array($e));
+		}
+		
+		Hook::listen('appEnd');
 	}
 }

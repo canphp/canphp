@@ -48,7 +48,7 @@ function obj($class, $app='', $args=array(), $file='', $forceInstance=false){
 			if(empty($args)){
 				$objArr[$class]=new $nsClass();
 			}else{
-				$objArr[$class]=call_user_func_array(array(new ReflectionClass($nsClass), 'newInstance'), $args);
+				$objArr[$class]=call_user_func_array(array(new \ReflectionClass($nsClass), 'newInstance'), $args);
 			}		
 		} 
 	}

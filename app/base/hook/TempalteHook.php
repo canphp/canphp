@@ -1,13 +1,8 @@
 <?php
-namespace app\base\util;
-/**
- * 模板标签类 
- */
-class Template {
-
-	public function tpl($template) {
-
-        $label = array(         
+namespace app\base\hook;
+class TempalteHook{	
+	public function templateParse($template){
+       $label = array(         
                 /**variable label
                     {$name} => <?php echo $name;?>
                     {$user['name']} => <?php echo $user['name'];?>
@@ -62,10 +57,11 @@ class Template {
                 '/\{([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/' => "<?php echo \\1;?>",
                 '/\{(\\$[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff:]*\(([^{}]*)\))\}/' => "<?php echo \\1;?>", 
         );
+		
         foreach ($label as $key => $value) {
-            $template = preg_replace($key,$value, $template);
+            $template = preg_replace($key, $value, $template);
         }
+		
         return $template;
 	}
-
 }
