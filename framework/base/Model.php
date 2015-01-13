@@ -12,7 +12,7 @@ class Model{
 				);
 	protected $database = 'default';
 	protected $table = '';	
-	protected $trueTable = '';
+	protected $trueTable = null;
 	protected static $objArr = array();
 	
 	public function __construct( $database = 'default' ) {
@@ -23,7 +23,9 @@ class Model{
 		if( empty($this->config) || !isset($this->config['DB_TYPE']) ) {
 			throw new \Exception($this->database.' database config error', 500);
 		}
-		$this->table = empty($this->trueTable) ? $this->config['DB_PREFIX'].$this->table : $this->trueTable;
+		$this->table = (null==$this->trueTable) ? $this->config['DB_PREFIX'].$this->table : $this->trueTable;
+		$this->trueTable = $this->table;
+		$this->table($this->trueTable, true);
 	}
 			
 	public function query($sql, $params = array()) {
