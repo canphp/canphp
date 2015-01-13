@@ -26,7 +26,7 @@ class Template {
                 /**include label
                     {include file="test"}
                 */                              
-                '/{include\s*file=\"(.*)\"}/i' => "<?php echo \$__Template->compile(\"$1\"); ?>",
+                '/{include\s*file=\"(.*)\"}/i' => "<?php \$__Template->display(\"$1\"); ?>",
                 
                 /**if label
                     {if $name==1}       =>  <?php if ($name==1){ ?>
