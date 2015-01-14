@@ -1,17 +1,14 @@
 <?php 
 return array (
-	//错误调试与日志配置
-	'DEBUG' => false,	//是否开启调试模式
-	'LOG_ON' => true,	//是否开启出错信息保存到文件
-	'ERROR_URL' => '', //出错跳转地址
+	'DEBUG' => false,	
 		
-	//网址与路由配置
-	'URL_BASE' => '/', //设置网址域名				
-	'URL_REWRITE' =>array(
-	
+	//route config
+	'REWRITE_ON' => 'false', 		
+	'REWRITE_RULE' =>array(
+		//'<app>/<c>/<a>'=>'<app>/<c>/<a>',
 	),
 	
-	//数据库配置
+	//db config
 	'DB'=>array(
 		'default' => 
 			array (
