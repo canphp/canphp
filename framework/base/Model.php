@@ -110,7 +110,7 @@ class Model{
 		return $this;
 	}
 
-	public function join($join, $way='left'){
+	public function join($join, $way='inner'){
 		$join = str_replace('{pre}', $this->config['DB_PREFIX'], $join);
 		$this->options['table'] = " {$this->options['table']} {$way} join {$join} ";
 		return $this;
