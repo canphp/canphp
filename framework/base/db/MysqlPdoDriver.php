@@ -120,14 +120,16 @@ class MysqlPdoDriver implements DbInterface {
 		$sqlArr = array();
 		$params = array();		
 		foreach( $condition as $k => $v ){
-			//处理join与混合多条件
 			if(!is_numeric($k)){
-				if(strpos($k, '.')){
-					$sqlArr[] = "{$k} = :{$k}";
+				if( false===strpos($k, ':') ){
+					$k = str_replace('`', '', $k);				
+					$key = ':__'.str_replace('.', '_', $k);
+					$field = '`'.str_replace('.', '`.`', $k).'`';					
+					$sqlArr[] = "{$field} = {$key}";
 				}else{
-					$sqlArr[] = "`{$k}` = :{$k}";
+					$key = $k;
 				}
-				$params[":{$k}"] = $v;
+				$params[$key] = $v;
 			}else{
 				$sqlArr[] = $v;
 			}
