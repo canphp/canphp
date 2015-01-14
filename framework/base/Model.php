@@ -121,12 +121,12 @@ class Model{
 		return $this;
 	}
 
-	public function data(array $data) {
+	public function data(array $data = array()) {
 		$this->options['data'] = $data;
 		return $this;
 	}
 
-	public function where(array $where) {
+	public function where(array $where = array()) {
 		$this->options['where'] = $where;
 		return $this;
 	}	
