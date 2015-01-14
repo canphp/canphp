@@ -1,5 +1,6 @@
 <?php
 namespace framework\base\db;
+use framework\base\Hook;
 class MysqlPdoDriver implements DbInterface {
 	protected $config =array();
 	protected $writeLink = NULL;
@@ -21,15 +22,30 @@ class MysqlPdoDriver implements DbInterface {
 	
 	public function query($sql, array $params = array()){
 		$sth = $this->_bindParams( $sql, $params, $this->_getReadLink());
-		if( $sth->execute() ) return $sth->fetchAll(\PDO::FETCH_ASSOC);
+		Hook::listen('dbQueryBegin', array($sql, $params));
+		if( $sth->execute() ) {
+			$data = $sth->fetchAll(\PDO::FETCH_ASSOC);
+			Hook::listen('dbQueryEnd', array($this->getSql(), $data));
+			return $data;
+		}
+		
 		$err = $sth->errorInfo();
+		Hook::listen('dbException', array($this->getSql(), $err[2]));
 		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err[2], 500);
 	}
 	
 	public function execute($sql, array $params = array()){
 		$sth = $this->_bindParams( $sql, $params, $this->_getWriteLink() );
-		if( $sth->execute() ) return $sth->rowCount();
+		
+		Hook::listen('dbExecuteBegin', array($sql, $params));
+		if( $sth->execute() ) {
+			$affectedRows = $sth->rowCount();
+			Hook::listen('dbExecuteEnd', array($this->getSql(), $affectedRows));
+			return $data;
+		}
+		
 		$err = $sth->errorInfo();
+		Hook::listen('dbException', array($this->getSql(), $err[2]));
 		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err[2], 500);
 	}
 	

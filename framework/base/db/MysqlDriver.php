@@ -1,5 +1,6 @@
 <?php
 namespace framework\base\db;
+use framework\base\Hook;
 class MysqlDriver implements DbInterface{
 	protected $config =array();
 	protected $writeLink = NULL;
@@ -21,24 +22,37 @@ class MysqlDriver implements DbInterface{
 	
 	public function query($sql, array $params = array()){
 		$this->_bindParams( $sql, $params, $this->_getReadLink());
+		
+		Hook::listen('dbQueryBegin', array($sql, $params));
 		$query = mysql_query( $this->getSql(), $this->_getReadLink() );
 		if($query){
 			$data = array();
 			while($row = mysql_fetch_array($query, MYSQL_ASSOC)){
 				$data[] = $row;
 			}
+			Hook::listen('dbQueryEnd', array($this->getSql(), $data));
 			return $data;
 		}
-		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. mysql_error(), 500);
+
+		$err = mysql_error();
+		Hook::listen('dbException', array($this->getSql(), $err));
+		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err, 500);
 	}
 	
 	public function execute($sql, array $params = array()){
 		$this->_bindParams( $sql, $params, $this->_getWriteLink());
+		
+		Hook::listen('dbExecuteBegin', array($sql, $params));
 		$query = mysql_query( $this->getSql(), $this->_getWriteLink() );
 		if($query){
-			return mysql_affected_rows( $this->_getWriteLink() );
+			$affectedRows = mysql_affected_rows( $this->_getWriteLink() );
+			Hook::listen('dbExecuteEnd', array($this->getSql(), $affectedRows));
+			return $affectedRows;
 		}
-		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. mysql_error(), 500);
+		
+		$err = mysql_error();
+		Hook::listen('dbException', array($this->getSql(), $err));
+		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err, 500);
 	}
 	
 	public function insert($table, array $data){
