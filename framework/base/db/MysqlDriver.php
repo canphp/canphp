@@ -49,8 +49,13 @@ class MysqlDriver implements DbInterface{
 			$marks[] = ":{$k}";
 		}
 		$table = $this->_table($table);
-		$this->execute("INSERT INTO {$table} (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
-		return mysql_insert_id( $this->_getWriteLink() );
+		$status = $this->execute("INSERT INTO {$table} (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
+		$id = mysql_insert_id( $this->_getWriteLink() );
+		if($id){
+			return $id;
+		}else{
+			return $status;
+		}
 	}
 	
 	public function update($table, array $condition = array(), array $data = array()){
@@ -101,7 +106,7 @@ class MysqlDriver implements DbInterface{
 	}
 	
 	public function rollBack(){
-		return $this->execute('ROOLBACK');
+		return $this->execute('ROLLBACK');
 	}
 	
 	private function _bindParams($sql, array $params, $link=null){

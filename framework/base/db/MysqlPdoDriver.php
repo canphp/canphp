@@ -41,8 +41,13 @@ class MysqlPdoDriver implements DbInterface {
 			$values[":{$k}"] = $v; 
 			$marks[] = ":{$k}";
 		}
-		$this->execute("INSERT INTO {$table} (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
-		return $this->_getWriteLink()->lastInsertId();
+		$status = $this->execute("INSERT INTO {$table} (".implode(', ', $keys).") VALUES (".implode(', ', $marks).")", $values);
+		$id = $this->_getWriteLink()->lastInsertId();
+		if($id){
+			return $id;
+		}else{
+			return $status;
+		}
 	}
 	
 	public function update($table, array $condition = array(), array $data = array()){
