@@ -101,7 +101,7 @@ class MysqlDriver implements DbInterface{
 	}
 	
 	public function rollBack(){
-		return $this->execute('ROOLBACK');
+		return $this->execute('ROLLBACK');
 	}
 	
 	private function _bindParams($sql, array $params, $link=null){
