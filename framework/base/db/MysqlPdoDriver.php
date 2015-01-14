@@ -36,12 +36,11 @@ class MysqlPdoDriver implements DbInterface {
 	
 	public function execute($sql, array $params = array()){
 		$sth = $this->_bindParams( $sql, $params, $this->_getWriteLink() );
-		
 		Hook::listen('dbExecuteBegin', array($sql, $params));
 		if( $sth->execute() ) {
 			$affectedRows = $sth->rowCount();
 			Hook::listen('dbExecuteEnd', array($this->getSql(), $affectedRows));
-			return $data;
+			return $affectedRows;
 		}
 		
 		$err = $sth->errorInfo();
