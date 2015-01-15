@@ -98,7 +98,9 @@ class MysqlPdoDriver implements DbInterface {
 	
 	public function getSql(){
 		$sql = $this->sqlMeta['sql'];
-		foreach($this->sqlMeta['params'] as $k=>$v ){
+		$arr = $this->sqlMeta['params'];
+		uksort($arr, function($a, $b){ return strlen($b)-strlen($a);} );
+		foreach($arr as $k=>$v ){
 			$sql = str_replace($k, $this->sqlMeta['link']->quote($v), $sql);
 		}
 		return $sql;
