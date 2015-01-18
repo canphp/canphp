@@ -30,7 +30,7 @@ class Config {
 						'DB_NAME' => 'cp',
 						'DB_CHARSET' => 'utf8',
 						'DB_PREFIX' => '',
-						'DB_CACHE' => 'default',						
+						'DB_CACHE' => 'DB_CACHE',						
 						'DB_SLAVE' => array(),
 						/* 
 						'DB_SLAVE' => array(
@@ -46,14 +46,26 @@ class Config {
 			),
 			
 			'TPL'=>array(
-				'TPL_PATH'=> $basePath,
-				'TPL_SUFFIX'=>'.html',
-				'TPL_CACHE'=>'default',
-				'TPL_DEPR'=>'_',					
+				'TPL_PATH' => $basePath,
+				'TPL_SUFFIX' => '.html',
+				'TPL_CACHE' => 'TPL_CACHE',
+				'TPL_DEPR' => '_',					
 			),
 			
 			'CACHE'=>array(
-				'default'=>array('CACHE_TYPE'=>'FileCache', 'CACHE_PATH'=>$basePath . 'data/cache/'),
+				'TPL_CACHE' => array(
+					'CACHE_TYPE' => 'FileCache',
+					'CACHE_PATH' => $basePath . 'data/cache/',
+					'GROUP' => 'tpl',
+					'HASH_DEEP' => 0,
+				),
+				
+				'DB_CACHE' => array(
+					'CACHE_TYPE' => 'FileCache',
+					'CACHE_PATH' => $basePath . 'data/cache/',
+					'GROUP' => 'db',
+					'HASH_DEEP' => 2,
+				),
 			),
 			
 			'STORAGE'=>array(
