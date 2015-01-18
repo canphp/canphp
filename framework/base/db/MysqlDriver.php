@@ -125,15 +125,15 @@ class MysqlDriver implements DbInterface{
 		return $this->execute('ROLLBACK');
 	}
 	
-	private function _bindParams($sql, array $params, $link=null){
+	protected function _bindParams($sql, array $params, $link=null){
 		$this->sqlMeta = array('sql'=>$sql, 'params'=>$params, 'link'=>$link);
 	}
 
-	private function _table($table){
+	protected function _table($table){
 		return (false===strpos($table, ' '))? "`{$table}`": $table;
 	}
 	
-	private function _where( array $condition ){
+	protected function _where( array $condition ){
 		$result = array( '_where' => '', '_bindParams' => array() );	 		
 		$sql = null;
 		$sqlArr = array();
@@ -161,7 +161,7 @@ class MysqlDriver implements DbInterface{
 		return $result;
 	}
 					
-	private  function _connect( $isMaster = true ) {
+	protected  function _connect( $isMaster = true ) {
 		$dbArr = array();
 		if( false==$isMaster && !empty($this->config['DB_SLAVE']) ) {	
 			$master = $this->config;
@@ -197,7 +197,7 @@ class MysqlDriver implements DbInterface{
         return $link;
 	}
 
-    private function _getReadLink() {
+    protected function _getReadLink() {
 		if( !isset( $this->readLink ) ) {
 			try{
 				$this->readLink = $this->_connect( false );
@@ -208,7 +208,7 @@ class MysqlDriver implements DbInterface{
 		return $this->readLink;
     }
 	
-    private function _getWriteLink() {
+    protected function _getWriteLink() {
         if( !isset( $this->writeLink ) ) {
             $this->writeLink = $this->_connect( true );
         }
