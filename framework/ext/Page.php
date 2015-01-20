@@ -340,6 +340,7 @@ private function _requestUri()
 		{
 			$url=str_replace($this->pageSeparator.'{page}','',$this->url);
 			$url=str_replace($this->pageSeparator.$this->pageName,'',$url);
+			$url=str_replace('{page}',$pageNum,$url);
 		}
 		return $url;
 	}
