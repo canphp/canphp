@@ -36,7 +36,6 @@ function obj($class, $app='', $args=array(), $file='', $forceInstance=false){
 		"", //global
 		"\\app\\{$app}\\model",
 		"\\app\\{$app}\\lib",
-		"\\app\\{$app}\\controller",
 		"\\framework\\ext",
 		"\\framework\\base",
 	);
