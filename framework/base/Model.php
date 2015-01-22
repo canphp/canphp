@@ -135,21 +135,15 @@ class Model{
 		return $this;
 	}
 
-	public function data($data = null) {
-		if(!$data){
-			$data = array();
-		}
+	public function data(array $data = array()) {
 		$this->options['data'] = $data;
 		return $this;
 	}
 
-	public function where($where = null) {
-		if(!$where){
-			$where = array();
-		}
+	public function where(array $where = array()) {
 		$this->options['where'] = $where;
 		return $this;
-	}	
+	}		
 
 	public function order($order) {
 		$this->options['order'] = $order;
