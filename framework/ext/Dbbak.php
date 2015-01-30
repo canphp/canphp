@@ -275,7 +275,7 @@ class Dbbak {
 	}
 	public function error($str)
 	{
-		cpError::show($str);
+		throw new \Exception($str, 500);
 	}
 
 }
