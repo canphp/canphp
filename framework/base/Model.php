@@ -223,7 +223,7 @@ class Model{
 		}elseif( $page <= $scope/2) {
 			$this->pager['allPages'] = range(1, $scope);
 		}elseif( $page <= $totalPage - $scope/2 ){
-			$right = $pager + (int)($scope/2);
+			$right = $page + (int)($scope/2);
 			$this->pager['allPages'] = range($right-$scope+1, $right);
 		}else{
 			$this->pager['allPages'] = range($totalPage-$scope+1, $totalPage);
