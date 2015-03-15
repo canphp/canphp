@@ -76,13 +76,13 @@ class Upload {
 			return false;
 		}	
 		//检查文件类型
-		$this->allowExts = array_map('strtolower', $this->allowExts);		
-		if( !in_array($file['extension'], $this->allowExts) ) {
+		$this->allowExts = array_map('strtolower', $this->config['allowExts']);		
+		if( !in_array($file['extension'], $this->config['allowExts'])) {
 			$this->errorMsg = '上传文件类型不允许！';
 			return false;
 		}
 		//检查文件大小
-		if ( $file['size'] > $this->maxSize ) {
+		if ($file['size'] > $this->config['maxSize']) {
 			$this->errorMsg = '上传文件大小超出限制！';
 			return false;
 		}
