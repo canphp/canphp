@@ -1,8 +1,17 @@
 <?php
+
+/**
+ * 上传类
+ */
+
 namespace framework\ext;
-//上传类
+
 class Upload {
 
+	/**
+	 * 上传配置
+	 * @var array
+	 */
 	protected $config = array(
         'maxSize'       =>  0, //上传的文件大小限制 (0-不做限制)
         'allowExts'     =>  array(), //允许的文件后缀
@@ -13,15 +22,33 @@ class Upload {
         'driverConfig'  =>  array(),
     );
 
-	protected $uploadFileInfo = array(); //上传成功的文件信息
-	protected $errorMsg = ''; //错误信息
+    /**
+     * 上传文件信息
+     * @var array
+     */
+	protected $uploadFileInfo = array();
 
+	/**
+	 * 错误消息
+	 * @var string
+	 */
+	protected $errorMsg = '';
+
+	/**
+	 * 初始化
+	 * @param array $config 上传配置
+	 */
 	public function __construct($config = array()) {
 		$this->config = array_merge($this->config, $config);
 		$this->setDriver();
 	}
 
-	public function upload($key='') {
+	/**
+	 * 上传配置
+	 * @param  string $key 上传字段
+	 * @return boolean
+	 */
+	public function upload($key = '') {
 		if(empty($_FILES)) {
 			$this->errorMsg = '没有文件上传！';
 			return false;
@@ -68,7 +95,11 @@ class Upload {
 		return true;
 	}
 
-	//检查文件合法性
+	/**
+	 * 检测文件合法性
+	 * @param  string $file 文件名
+	 * @return boolean
+	 */
 	protected function check($file) {
 		//文件上传失败
 		if($file['error'] !== 0) {
@@ -100,7 +131,9 @@ class Upload {
 		return true;
 	}
 
-	//设置上传驱动
+	/**
+	 * 设置驱动
+	 */
 	protected function setDriver() {
 		$uploadDriver = __NAMESPACE__.'\upload\\' . ucfirst( $this->config['driver'] ).'Driver';
 		$this->uploader = new $uploadDriver($config);
@@ -109,12 +142,18 @@ class Upload {
         }
     }
 
-    //上传成功获取返回信息
+    /**
+     * 获取上传文件信息
+     * @return array
+     */
 	public function getUploadFileInfo() {
 		return $this->uploadFileInfo;
 	}
 
-    //获取错误消息
+    /**
+     * 获取框架错误
+     * @return string
+     */
     public function getError(){
         return $this->error;
     }

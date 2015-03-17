@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * 本地上传驱动
+ */
+
 namespace framework\ext\upload;
 
 class LocalDriver implements UploadInterface{

@@ -1,11 +1,41 @@
 <?php
+
+/**
+ * 模板引擎类
+ */
+
 namespace framework\base;
+
 class Template {
+
+	/**
+	 * 模板配置
+	 * @var array
+	 */
 	protected $config =array();
+
+	/**
+	 * 布局模板
+	 * @var null
+	 */
 	protected $label = null;
+
+	/**
+	 * 模板赋值数组
+	 * @var array
+	 */
 	protected $vars = array();
+
+	/**
+	 * 缓存对象
+	 * @var null
+	 */
 	protected $cache = null;
-	
+
+	/**
+	 * 初始化
+	 * @param array $config 模板引擎配置
+	 */
 	public function __construct($config) {
 		$this->config = $config;
 		$this->assign('__Template', $this);
@@ -68,6 +98,12 @@ class Template {
 		$this->cache = new Cache( $this->config['TPL_CACHE'] );
 	}
 	
+	/**
+	 * 模板赋值
+	 * @param  string $name  变量名
+	 * @param  mixed  $value 变量值
+	 * @return void
+	 */
 	public function assign($name, $value = '') {
 		if( is_array($name) ){
 			foreach($name as $k => $v){
@@ -78,7 +114,14 @@ class Template {
 		}
 	}
 
-	public function display($tpl = '', $return = false, $isTpl = true ) {
+	/**
+	 * 模板输出
+	 * @param  string  $tpl    模板名
+	 * @param  boolean $return 返回模板内容
+	 * @param  boolean $isTpl  是否模板文件
+	 * @return mixed
+	 */
+	public function display($tpl = '', $return = false, $isTpl = true) {
 		if( $return ){
 			if ( ob_get_level() ){
 				ob_end_flush();
@@ -95,9 +138,15 @@ class Template {
 			ob_end_clean();
 			return $content;
 		}
-	}	
-		
-	public function compile( $tpl, $isTpl = true ) {
+	}
+
+	/**
+	 * 模板编译
+	 * @param  string  $tpl    模板名
+	 * @param  boolean $isTpl  是否模板文件
+	 * @return string
+	 */	
+	public function compile($tpl, $isTpl = true) {
 		if( $isTpl ){
 			$tplFile = $this->config['TPL_PATH'] . $tpl . $this->config['TPL_SUFFIX'];
 			if ( !file_exists($tplFile) ) {

@@ -1,7 +1,14 @@
 <?php
+
+/**
+ * mysqlpdo数据库驱动
+ */
+
 namespace framework\base\db;
 use framework\base\Hook;
+
 class MysqlPdoDriver implements DbInterface {
+
 	protected $config =array();
 	protected $writeLink = NULL;
 	protected $readLink = NULL;
@@ -11,7 +18,7 @@ class MysqlPdoDriver implements DbInterface {
 		$this->config = $config;
 	}
 
-	public function select($table, array $condition = array(), $field='*', $order=NULL, $limit=NULL){
+	public function select($table, array $condition = array(), $field='*', $order=NULL, $limit=NULL){ 
 		$field = !empty($field) ? $field : '*';
 		$order = !empty($order) ? ' ORDER BY '.$order : '';
 		$limit = !empty($limit) ? ' LIMIT '.$limit : '';
@@ -20,7 +27,7 @@ class MysqlPdoDriver implements DbInterface {
 		return $this->query("SELECT {$field} FROM {$table} {$condition['_where']} $order $limit", $condition['_bindParams']);		
 	}
 	
-	public function query($sql, array $params = array()){
+	public function query($sql, array $params = array()) {
 		$sth = $this->_bindParams( $sql, $params, $this->_getReadLink());
 		Hook::listen('dbQueryBegin', array($sql, $params));
 		if( $sth->execute() ) {
@@ -34,7 +41,7 @@ class MysqlPdoDriver implements DbInterface {
 		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err[2], 500);
 	}
 	
-	public function execute($sql, array $params = array()){
+	public function execute($sql, array $params = array()) {
 		$sth = $this->_bindParams( $sql, $params, $this->_getWriteLink() );
 		Hook::listen('dbExecuteBegin', array($sql, $params));
 		if( $sth->execute() ) {
@@ -48,7 +55,7 @@ class MysqlPdoDriver implements DbInterface {
 		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err[2], 500);
 	}
 	
-	public function insert($table, array $data = array()){
+	public function insert($table, array $data = array()) {
 		$table = $this->_table($table);
 		$values = array();
 		foreach($data as $k=>$v){
@@ -65,7 +72,7 @@ class MysqlPdoDriver implements DbInterface {
 		}
 	}
 	
-	public function update($table, array $condition = array(), array $data = array()){
+	public function update($table, array $condition = array(), array $data = array()) {
 		if( empty($condition) ) return false;
 		$values = array();
 		foreach ($data as $k=>$v){
@@ -77,7 +84,7 @@ class MysqlPdoDriver implements DbInterface {
 		return $this->execute("UPDATE {$table} SET ".implode(', ', $keys) . $condition['_where'], $condition['_bindParams'] + $values);
 	}
 	
-	public function delete($table, array $condition = array() ){
+	public function delete($table, array $condition = array() ) {
 		if( empty($condition) ) return false;
 		$table = $this->_table($table);
 		$condition = $this->_where( $condition );
@@ -96,7 +103,7 @@ class MysqlPdoDriver implements DbInterface {
 		return  $this->query("SHOW FULL FIELDS FROM {$table}");
 	}
 	
-	public function getSql(){
+	public function getSql() {
 		$sql = $this->sqlMeta['sql'];
 		$arr = $this->sqlMeta['params'];
 		uksort($arr, function($a, $b){ return strlen($b)-strlen($a);} );
@@ -106,19 +113,19 @@ class MysqlPdoDriver implements DbInterface {
 		return $sql;
 	}
 	
-	public function beginTransaction(){
+	public function beginTransaction() {
 		return $this->_getWriteLink()->beginTransaction();
 	}
 	
-	public function commit(){
+	public function commit() {
 		return $this->_getWriteLink()->commit();
 	}
 	
-	public function rollBack(){
+	public function rollBack() {
 		return $this->_getWriteLink()->rollBack();
 	}
 	
-	protected function _bindParams($sql, array $params, $link=null){
+	protected function _bindParams($sql, array $params, $link=null) {
 		$this->sqlMeta = array('sql'=>$sql, 'params'=>$params, 'link'=>$link);
 		$sth = $link->prepare($sql);		
 		foreach($params as $k=>$v){
@@ -131,7 +138,7 @@ class MysqlPdoDriver implements DbInterface {
 		return (false===strpos($table, ' '))? "`{$table}`": $table;
 	}
 	
-	protected function _where( array $condition ){
+	protected function _where(array $condition) {
 		$result = array( '_where' => '', '_bindParams' => array() );	 		
 		$sql = null; 
 		$sqlArr = array();
@@ -159,7 +166,7 @@ class MysqlPdoDriver implements DbInterface {
 		return $result;
 	}
 	
-	protected  function _connect( $isMaster = true ) {
+	protected  function _connect($isMaster = true) {
 		$dbArr = array();
 		if( false==$isMaster && !empty($this->config['DB_SLAVE']) ) {	
 			$master = $this->config;
@@ -192,7 +199,7 @@ class MysqlPdoDriver implements DbInterface {
 	}
 
     protected function _getReadLink() {
-		if( !isset( $this->readLink ) ) {
+		if(!isset($this->readLink)) {
 			try{
 				$this->readLink = $this->_connect( false );
 			}catch( \Exception $e){
@@ -203,7 +210,7 @@ class MysqlPdoDriver implements DbInterface {
     }
 	
     protected function _getWriteLink() {
-        if( !isset( $this->writeLink ) ) {
+        if(!isset($this->writeLink)) {
             $this->writeLink = $this->_connect( true );
         }
 		return $this->writeLink;

@@ -1,7 +1,19 @@
 <?php
+
+/**
+ * 模板钩子
+ */
+
 namespace app\base\hook;
-class TempalteHook{	
-	public function templateParse($template){
+
+class TempalteHook {
+
+	/**
+     * 模板解析
+     * @param  string $template 模板内容
+     * @return string
+     */
+    public function templateParse($template) {
        $label = array(         
                 /**variable label
                     {$name} => <?php echo $name;?>

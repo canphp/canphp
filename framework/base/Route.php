@@ -1,19 +1,39 @@
 <?php
+
+/**
+ * 路由类
+ */
+
 namespace framework\base;
-class Route {			
+
+class Route {
+
+	/**
+	 * 路由规则
+	 * @var array
+	 */
 	static protected $rewriteRule = array();
+
+	/**
+	 * 路由开关
+	 * @var boolean
+	 */
 	static protected $rewriteOn = false;
-	
-	static public function parseUrl( $rewriteRule, $rewriteOn=false){
+
+	/**
+	 * 解析URL
+	 * @param  array   $rewriteRule 路由规则
+	 * @param  boolean $rewriteOn   路由开关
+	 * @return void
+	 */
+	static public function parseUrl( $rewriteRule, $rewriteOn=false) {
 		self::$rewriteRule = $rewriteRule;
 		self::$rewriteOn = $rewriteOn;
 		if( self::$rewriteOn && !empty(self::$rewriteRule ) ) {
 			if( ($pos = strpos( $_SERVER['REQUEST_URI'], '?' )) !== false ){
 				parse_str( substr( $_SERVER['REQUEST_URI'], $pos + 1 ), $_GET );
 			}
-			foreach(self::$rewriteRule as $rule =>
-
-	$mapper){
+			foreach(self::$rewriteRule as $rule => $mapper) {
 				$rule = ltrim($rule, "./\\");
 				if( false === stripos($rule, 'http://')){
 					$rule = $_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') . '/' . $rule;
@@ -48,7 +68,13 @@ class Route {
 		if( !defined('ACTION_NAME') ) define('ACTION_NAME', $action_name);
 	}
 
-	static public function url($route=null, $params=array()){
+	/**
+	 * 生成URL
+	 * @param  string $route  URL路径
+	 * @param  array  $params URL参数
+	 * @return string
+	 */
+	static public function url($route=null, $params=array()) {
 		$app = APP_NAME;
 		$controller = CONTROLLER_NAME;
 		$action = ACTION_NAME;

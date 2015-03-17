@@ -1,13 +1,19 @@
 <?php
+
+/**
+ * mysql数据库驱动
+ */
+
 namespace framework\base\db;
 use framework\base\Hook;
-class MysqlDriver implements DbInterface{
+
+class MysqlDriver implements DbInterface {
 	protected $config =array();
 	protected $writeLink = NULL;
 	protected $readLink = NULL;
 	protected $sqlMeta = array('sql'=>'', 'params'=>array(), 'link'=>NULL);
 	
-	public function __construct( $config = array() ){
+	public function __construct($config = array()) {
 		$this->config = $config;
 	}
 
@@ -20,7 +26,7 @@ class MysqlDriver implements DbInterface{
 		return $this->query("SELECT {$field} FROM {$table} {$condition['_where']} {$order} {$limit}", $condition['_bindParams']);		
 	}
 	
-	public function query($sql, array $params = array()){
+	public function query($sql, array $params = array()) {
 		$this->_bindParams( $sql, $params, $this->_getReadLink());
 		
 		Hook::listen('dbQueryBegin', array($sql, $params));
@@ -39,7 +45,7 @@ class MysqlDriver implements DbInterface{
 		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err, 500);
 	}
 	
-	public function execute($sql, array $params = array()){
+	public function execute($sql, array $params = array()) {
 		$this->_bindParams( $sql, $params, $this->_getWriteLink());
 		
 		Hook::listen('dbExecuteBegin', array($sql, $params));
@@ -55,7 +61,7 @@ class MysqlDriver implements DbInterface{
 		throw new \Exception('Database SQL: "' . $this->getSql(). '". ErrorInfo: '. $err, 500);
 	}
 	
-	public function insert($table, array $data){
+	public function insert($table, array $data) {
 		$values = array();
 		foreach($data as $k=>$v){
 			$keys[] = "`{$k}`"; 
@@ -72,7 +78,7 @@ class MysqlDriver implements DbInterface{
 		}
 	}
 	
-	public function update($table, array $condition = array(), array $data = array()){
+	public function update($table, array $condition = array(), array $data = array()) {
 		if( empty($condition) ) return false;
 		$values = array();
 		foreach ($data as $k=>$v){
@@ -84,7 +90,7 @@ class MysqlDriver implements DbInterface{
 		return $this->execute("UPDATE {$table} SET ".implode(', ', $keys) . $condition['_where'], $condition['_bindParams'] + $values);
 	}
 	
-	public function delete($table, array $condition = array() ){
+	public function delete($table, array $condition = array()) {
 		if( empty($condition) ) return false;
 		$table = $this->_table($table);
 		$condition = $this->_where( $condition );
@@ -103,7 +109,7 @@ class MysqlDriver implements DbInterface{
 		return  $this->query("SHOW FULL FIELDS FROM {$table}");
 	}
 	
-	public function getSql(){
+	public function getSql() {
 		$sql = $this->sqlMeta['sql'];
 		$arr = $this->sqlMeta['params'];
 		uksort($arr, function($a, $b){ return strlen($b)-strlen($a);} );
@@ -113,27 +119,27 @@ class MysqlDriver implements DbInterface{
 		return $sql;
 	}
 	
-	public function beginTransaction(){
+	public function beginTransaction() {
 		return $this->execute('SET AUTOCOMMIT=0');
 	}
 	
-	public function commit(){
+	public function commit() {
 		return $this->execute('COMMIT');
 	}
 	
-	public function rollBack(){
+	public function rollBack() {
 		return $this->execute('ROLLBACK');
 	}
 	
-	protected function _bindParams($sql, array $params, $link=null){
+	protected function _bindParams($sql, array $params, $link=null) {
 		$this->sqlMeta = array('sql'=>$sql, 'params'=>$params, 'link'=>$link);
 	}
 
-	protected function _table($table){
+	protected function _table($table) {
 		return (false===strpos($table, ' '))? "`{$table}`": $table;
 	}
 	
-	protected function _where( array $condition ){
+	protected function _where( array $condition ) {
 		$result = array( '_where' => '', '_bindParams' => array() );	 		
 		$sql = null;
 		$sqlArr = array();
@@ -161,7 +167,7 @@ class MysqlDriver implements DbInterface{
 		return $result;
 	}
 					
-	protected  function _connect( $isMaster = true ) {
+	protected  function _connect($isMaster = true) {
 		$dbArr = array();
 		if( false==$isMaster && !empty($this->config['DB_SLAVE']) ) {	
 			$master = $this->config;
@@ -198,7 +204,7 @@ class MysqlDriver implements DbInterface{
 	}
 
     protected function _getReadLink() {
-		if( !isset( $this->readLink ) ) {
+		if(!isset($this->readLink)) {
 			try{
 				$this->readLink = $this->_connect( false );
 			}catch(Exception $e){
@@ -209,7 +215,7 @@ class MysqlDriver implements DbInterface{
     }
 	
     protected function _getWriteLink() {
-        if( !isset( $this->writeLink ) ) {
+        if(!isset($this->writeLink)) {
             $this->writeLink = $this->_connect( true );
         }
 		return $this->writeLink;
