@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Memcache缓存驱动
+ */
+
 namespace framework\base\cache;
 
 class MemcacheDriver implements CacheInterface{
@@ -6,7 +11,7 @@ class MemcacheDriver implements CacheInterface{
     protected $group = ''; 
     protected $ver = 0;
 	
-    public function __construct( $config = array() ) {
+    public function __construct($config = array()) {
 		$this->mmc = new Memcache;
 		
 		if( empty($config) ) {

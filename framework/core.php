@@ -1,4 +1,9 @@
-<?php	
+<?php
+
+/**
+ * 框架核心
+ */
+
 if( !defined('ROOT_PATH') ) define('ROOT_PATH', realpath('./').DIRECTORY_SEPARATOR);
 if( !defined('BASE_PATH') ) define('BASE_PATH', realpath('./').DIRECTORY_SEPARATOR);
 if( !defined('CONFIG_PATH') ) define('CONFIG_PATH', BASE_PATH.'data/config/');
@@ -9,7 +14,13 @@ use framework\base\Config;
 use framework\base\Route;
 use framework\base\App;
 
-function config($key=NULL, $value=NULL){
+/**
+ * 获取设置配置
+ * @param  string $key   配置项
+ * @param  mixed  $value 配置值
+ * @return array
+ */
+function config($key = NULL, $value = NULL){
 	if( func_num_args() <= 1 ){
 		return Config::get($key);
 	}else{
@@ -17,46 +28,53 @@ function config($key=NULL, $value=NULL){
 	}
 }
 
-function url($route=null, $params=array()){
+/**
+ * URL生成
+ * @param  string $route  地址
+ * @param  array  $params 参数
+ * @return string
+ */
+function url($route = null, $params = array()){
 	return Route::url($route, $params);
 }
 
-function model($model, $app='', $forceInstance=false){
-	return obj($model, $app, '', '', $forceInstance);
-}
-
-function obj($class, $app='', $args=array(), $file='', $forceInstance=false){
+/**
+ * 对象调用函数
+ * @param  string $class 模块名/类名
+ * @param  string $layer 模块层
+ * @return object
+ */
+function obj($class, $layer = 'model'){
 	static $objArr = array();
-	if( empty($app) ) $app = APP_NAME;
-
-	if( isset($objArr[$class]) && false==$forceInstance ) return $objArr[$class];
-	if( !empty($file) ) require_once($file);
-		
-	$nsArr = array(
-		"", //global
-		"\\app\\{$app}\\model",
-		"\\app\\{$app}\\lib",
-		"\\framework\\ext",
-		"\\framework\\base",
-	);
-	
-	foreach($nsArr as $ns){
-		$nsClass = $ns.'\\'.$class;
-		
-		if( class_exists($nsClass) ){
-			if(empty($args)){
-				$objArr[$class]=new $nsClass();
-			}else{
-				$objArr[$class]=call_user_func_array(array(new \ReflectionClass($nsClass), 'newInstance'), $args);
-			}		
-		} 
+	$param = explode('/', $class, 2);
+	$paramCount = count($param);
+	switch ($paramCount) {
+		case 1:
+			$app = APP_NAME;
+			$module = $str[0];
+			break;
+		case 2:
+			$app = $str[0];
+			$module = $str[1];
+			break;
 	}
-	if( !isset($objArr[$class]) ) throw new \Exception("Class '{$class}' not found'", 500);
-	
-	return $objArr[$class];
+	$app = strtolower($app);
+	$class = "\\app\\{$app}\\{$layer}\\{$module}".ucfirst($layer);
+	if(isset($objArr[$class])){
+        return $objArr[$class];
+	}
+	if(!class_exists($class)){
+		throw new \Exception("Class '{$class}' not found'", 500);
+	}
+	$obj = new $class();
+	$objArr[$class] = $obj;
+	return $obj;
 }
 
 
+/**
+ * 自动注册类
+ */
 spl_autoload_register(function($class){
 	static $fileList = array();
 	$prefixes =array(

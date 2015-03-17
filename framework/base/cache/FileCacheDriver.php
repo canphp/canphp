@@ -1,10 +1,15 @@
 <?php
+
+/**
+ * 文件缓存驱动
+ */
+
 namespace framework\base\cache;
 
 class FileCacheDriver implements CacheInterface{
 	protected $config = array();
 
-    public function __construct( $config = array() ) {
+    public function __construct($config = array()) {
 		$this->config = array(
 								'CACHE_PATH' => 'data/cache/',
 								'GROUP' => 'tmp',
@@ -13,7 +18,7 @@ class FileCacheDriver implements CacheInterface{
 		$this->config = array_merge($this->config, (array)$config);
     }
 
-    public function get( $key ){
+    public function get($key) {
 		$content = @file_get_contents( $this->_getFilePath($key) );
 		if( empty($content) ) return false;
 		
@@ -28,7 +33,7 @@ class FileCacheDriver implements CacheInterface{
     }
 	
 
-    public function set($key, $value, $expire = 1800){		
+    public function set($key, $value, $expire = 1800) {		
         $value = serialize($value);
 		$md5Sign = md5($value);
 		$expire = time() + $expire;		
@@ -37,11 +42,11 @@ class FileCacheDriver implements CacheInterface{
 	   return @file_put_contents($this->_getFilePath($key, true), $content, LOCK_EX);
     }
 	
-	public function inc($key, $value = 1){
+	public function inc($key, $value = 1) {
 		 return $this->set($key, intval($this->get($key)) + intval($value), -1);
     }
 	
-	public function des($key, $value = 1){
+	public function des($key, $value = 1) {
 		 return $this->set($key, intval($this->get($key)) - intval($value), -1);
     }
 	
@@ -68,7 +73,7 @@ class FileCacheDriver implements CacheInterface{
 		}
     }
 	
-	private function _getFilePath($key, $isCreatePath = false){
+	private function _getFilePath($key, $isCreatePath = false) {
 		$key = md5($key);
 		
 		$dir = $this->config['CACHE_PATH'] . '/' . $this->config['GROUP'] . '/';

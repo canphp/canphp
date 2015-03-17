@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * SAE缓存驱动
+ */
+
 namespace framework\base\cache;
 
 class SaeMemcacheDriver implements CacheInterface{
@@ -6,7 +11,7 @@ class SaeMemcacheDriver implements CacheInterface{
     protected $group = ''; 
     protected $ver = 0;
 	
-    public function __construct( $config = array() ) {
+    public function __construct($config = array()) {
 		$this->mmc = memcache_init();
 		$this->group = $config['GROUP'];
 		$this->ver = intval( memcache_get($this->mmc, $this->group.'_ver') ); 

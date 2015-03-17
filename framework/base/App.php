@@ -1,12 +1,22 @@
 <?php
+
+/**
+ * 应用启动
+ */
+
 namespace framework\base;
-class App{
+
+class App {
 	
-	static protected function init(){
+	/**
+	 * 初始化配置
+	 */
+	static protected function init() {
 		Config::init( BASE_PATH );
 		Config::loadConfig( CONFIG_PATH . 'global.php' );
-		Config::loadConfig( CONFIG_PATH . Config::get('ENV') . '.php' );
-		
+		if(defined('ENV')){
+			Config::loadConfig( CONFIG_PATH . Config::get('ENV') . '.php' );
+		);
 		date_default_timezone_set( Config::get('TIMEZONE') );
 		
 		//error display
@@ -18,8 +28,11 @@ class App{
 			error_reporting(0);
 		}	
 	}
-	
-	static public function run(){
+
+	/**
+	 * 运行框架
+	 */
+	static public function run() {
 		try{			
 			self::init();
 			
@@ -49,7 +62,7 @@ class App{
 			$obj ->$action();
 			Hook::listen('actionAfter', array($obj, $action));
 			
-		} catch( \Exception $e ){
+		} catch(\Exception $e){
 			Hook::listen('appError', array($e));
 		}
 		

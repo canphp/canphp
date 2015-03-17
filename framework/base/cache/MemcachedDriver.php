@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Memcached缓存驱动
+ */
+
 namespace framework\base\cache;
 
 class MemcachedDriver implements CacheInterface{
@@ -6,10 +11,10 @@ class MemcachedDriver implements CacheInterface{
     protected $group = ''; 
     protected $ver = 0;
 	
-    public function __construct( $config = array() ) {
+    public function __construct($config = array()) {
 		$this->mmc = new Memcached;
 		
-		if( empty($config) ) {
+		if(empty($config)) {
 			$config['MEM_SERVER'] = array(array('127.0.0.1', 11211));
 			$config['MEM_GROUP'] = '';
 		}

@@ -1,12 +1,47 @@
 <?php
+
+/**
+ * 缓存类
+ */
+
 namespace framework\base;
-class Cache{
-	protected $config =array();
+
+class Cache {
+
+	/**
+	 * 缓存配置
+	 * @var array
+	 */
+	protected $config = array();
+
+	/**
+	 * 配置名
+	 * @var string
+	 */
 	protected $cache = 'default';
-	public $proxyObj=null;
-	public $proxyExpire=1800;
+
+	/**
+	 * 代理对象
+	 * @var null
+	 */
+	public $proxyObj = null;
+
+	/**
+	 * 代理缓存时间
+	 * @var integer
+	 */
+	public $proxyExpire = 1800;
+
+	/**
+	 * 缓存对象
+	 * @var array
+	 */
 	protected static $objArr = array();
 	
+	/**
+	 * 初始化
+	 * @param string $cache 缓存配置名
+	 */
     public function __construct( $cache = 'default' ) {
 		if( $cache ){
 			$this->cache = $cache;
@@ -17,7 +52,13 @@ class Cache{
 		}
     }
 
-	public function __call($method, $args){
+    /**
+     * 回调驱动
+     * @param  [type] $method 回调方法
+     * @param  [type] $args   回调参数
+     * @return object
+     */
+	public function __call('$method', $args) {
 		if( !isset(self::$objArr[$this->cache]) ){		
 			$cacheDriver = __NAMESPACE__.'\cache\\' . ucfirst( $this->config['CACHE_TYPE'] ).'Driver';
 			if( !class_exists($cacheDriver) ) {
