@@ -20,14 +20,14 @@ Interface CacheInterface {
 	 * 递增缓存值
 	 * @param  string  $key   缓存名
 	 * @param  integer $value 递增数量
-	 * @return bool
+	 * @return boolean
 	 */
 	public function des($key, $value = 1);
 	
 	/**
 	 * 删除缓存
 	 * @param  string $key 缓存名
-	 * @return bool
+	 * @return boolean
 	 */
 	public function del($key);
 

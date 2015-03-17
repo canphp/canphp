@@ -54,8 +54,8 @@ class Cache {
 
     /**
      * 回调驱动
-     * @param  [type] $method 回调方法
-     * @param  [type] $args   回调参数
+     * @param  string $method 回调方法
+     * @param  array  $args   回调参数
      * @return object
      */
 	public function __call($method, $args) {

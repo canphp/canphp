@@ -1,9 +1,26 @@
 <?php
+
+/**
+ * 配置类
+ */
+
 namespace framework\base;
-class Config {		
+
+class Config {
+
+	/**
+	 * 全局配置
+	 * @var array
+	 */
 	static protected $config = array();
-	
-	static public function init($basePath=''){
+
+	/**
+	 * 初始化配置
+	 * @param  string $basePath 项目目录
+	 * @return void
+	 */
+	static public function init($basePath = '') {
+
 		self::$config = array(
 			'ENV' => 'development',
 			'DEBUG' => true,	
@@ -73,7 +90,11 @@ class Config {
 			),				
 		);
 	}
-		
+	
+	/**
+	 * 加载配置文件
+	 * @param  string $file 配置路径
+	 */
 	static public function loadConfig($file){
 		if( !file_exists($file) ){
 			throw new \Exception("Config file '{$file}' not found", 500); 
@@ -88,7 +109,12 @@ class Config {
 			}
 		}
 	}
-	
+
+	/**
+	 * 获取配置项
+	 * @param  string $key 配置名
+	 * @return mixed
+	 */
 	static public function get($key=NULL){
 		if( empty($key) ) return self::$config;
 		$arr = explode('.', $key);
@@ -112,7 +138,12 @@ class Config {
 		}
 		return NULL;
 	}
-	
+
+	/**
+	 * 设置配置项
+	 * @param string $key   配置名
+	 * @param mixed  $value 配置值
+	 */
 	static public function set($key, $value){
 		$arr = explode('.', $key);
 		switch( count($arr) ){
