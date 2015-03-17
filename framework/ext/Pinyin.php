@@ -15,7 +15,7 @@ class Pinyin {
 	protected $lib;
 	
 	/**
-	 * 构造函数
+	 * 构建函数
 	 * @return void
 	 */
 	public function __construct() {

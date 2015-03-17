@@ -27,7 +27,7 @@ class Storage {
 	protected static $objArr = array();
 
 	/**
-	 * 初始化
+	 * 构建函数
 	 * @param string $storage 存储配置名
 	 */
     public function __construct( $storage = 'default' ) {

@@ -33,7 +33,7 @@ class Template {
 	protected $cache = null;
 
 	/**
-	 * 初始化
+	 * 构建函数
 	 * @param array $config 模板引擎配置
 	 */
 	public function __construct($config) {

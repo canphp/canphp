@@ -35,7 +35,7 @@ class Upload {
 	protected $errorMsg = '';
 
 	/**
-	 * 初始化
+	 * 构建函数
 	 * @param array $config 上传配置
 	 */
 	public function __construct($config = array()) {

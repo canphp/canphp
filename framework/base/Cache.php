@@ -39,7 +39,7 @@ class Cache {
 	protected static $objArr = array();
 	
 	/**
-	 * 初始化
+	 * 构建函数
 	 * @param string $cache 缓存配置名
 	 */
     public function __construct( $cache = 'default' ) {

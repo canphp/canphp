@@ -9,7 +9,7 @@ namespace framework\base\db;
 interface DbInterface {
 	
 	/**
-	 * 初始化
+	 * 构建函数
 	 * @param array $config 数据库配置
 	 */
 	public function __construct($config);

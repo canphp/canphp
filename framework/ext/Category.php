@@ -33,7 +33,7 @@ class Category {
 	private $field=array();
 
 	/**
-	 * 初始化
+	 * 构建函数
 	 * @param array $field 字段映射
 	 */
 	public function __construct($field=array()) {	
