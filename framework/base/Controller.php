@@ -6,7 +6,7 @@
 
 namespace framework\base;
 
-class Controller{
+class Controller {
 
 	/**
 	 * 公共布局

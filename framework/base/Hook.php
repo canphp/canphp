@@ -6,7 +6,7 @@
 
 namespace framework\base;
 
-class Hook{
+class Hook {
 
 	/**
 	 * 钩子列表
@@ -19,7 +19,7 @@ class Hook{
 	 * @param  string $basePath 钩子目录
 	 * @return boolean
 	 */
-	static public function init($basePath=''){		
+	static public function init($basePath='') {		
 		$dir = str_replace('/', DIRECTORY_SEPARATOR, $basePath.'app/base/hook/');
 		foreach(glob($dir . '*.php') as $file){
 			$pos = strrpos($file, DIRECTORY_SEPARATOR);
@@ -42,7 +42,7 @@ class Hook{
 	 * @param  mixed  $result  钩子返回
 	 * @return boolean
 	 */
-	static public function listen($tag, $params=array(), &$result=null){
+	static public function listen($tag, $params=array(), &$result=null) {
 		if( !isset(self::$tags[$tag]) ) return false;
 		foreach(self::$tags[$tag] as $class){
 			$result = self::exec($class, $tag, $params);
@@ -60,7 +60,7 @@ class Hook{
 	 * @param  array  $params 参数
 	 * @return object
 	 */
-	static protected function exec($class, $method, $params){
+	static protected function exec($class, $method, $params) {
 		static $objArr = array();
 		if( !isset($objArr[$class]) ){
 			$objArr[$class]= new $class();
