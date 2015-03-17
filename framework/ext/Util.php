@@ -1,8 +1,18 @@
 <?php
+
+/**
+ * 常用工具库
+ */
+
 namespace framework\ext;
 
-class Util{
-	//html代码输入
+class Util {
+
+	/**
+	 * HTML代码过滤
+	 * @param  string $str 字符串
+	 * @return string
+	 */
 	public static function escapeHtml($str){
 		$search = array ("'<script[^>]*?>.*?</script>'si",  // 去掉 javascript
 						 "'<iframe[^>]*?>.*?</iframe>'si", // 去掉iframe
@@ -16,7 +26,10 @@ class Util{
 	}
 
 
-	// 获取客户端IP地址
+	/**
+	 * 获取来访IP
+	 * @return string
+	 */
 	public static function getIp(){
 	   if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
 		   $ip = getenv("HTTP_CLIENT_IP");
@@ -31,48 +44,53 @@ class Util{
 	   return $ip;
 	}
 
-	//中文字符串截取
-	public static function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true){
-		switch($charset){
-			case 'utf-8':$char_len=3;break;
-			case 'UTF8':$char_len=3;break;
-			default:$char_len=2;
-		}
-		//小于指定长度，直接返回
-		if(strlen($str)<=($length*$char_len)){	
-			return $str;
-		}
-		if(function_exists("mb_substr")){   
-			$slice= mb_substr($str, $start, $length, $charset);
-		} else if(function_exists('iconv_substr')){
-			$slice=iconv_substr($str,$start,$length,$charset);
-		} else { 
-		    $re['utf-8']   = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
-			$re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
-			$re['gbk']    = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
-			$re['big5']   = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
-			preg_match_all($re[$charset], $str, $match);
-			$slice = join("",array_slice($match[0], $start, $length));
-		}
-		if($suffix) return $slice."…";
-		return $slice;
+	/**
+	 * 中英文字符串截取
+	 * @param  string  $str     字符串
+	 * @param  integer $start   起始长度
+	 * @param  integer $length  截取长度
+	 * @param  string  $charset 字符编码
+	 * @param  boolean $suffix  截取后缀
+	 * @return string
+	 */
+	public static function msubstr($str, $start = 0, $length, $charset="utf-8", $suffix = true){
+		if($charset!='utf-8'){
+            $str = mb_convert_encoding($str,'utf8',$charset);
+        }
+        $osLen = mb_strlen($str);
+        if($osLen <= $length){
+            return $str;
+        }
+        $string = mb_substr($str,$start,$length,'utf8');
+        $sLen = mb_strlen($string,'utf8');
+        $bLen = strlen($string);
+        $sCharCount = (3*$sLen-$bLen)/2;
+        if($osLen<=$sCharCount+$length){
+            $arr = preg_split('/(?<!^)(?!$)/u',mb_substr($str,$length+1,$osLen,'utf8')); //将中英混合字符串分割成数组（UTF8下有效）
+        }else {
+            $arr = preg_split('/(?<!^)(?!$)/u',mb_substr($str,$length+1,$sCharCount,'utf8'));
+        }
+        foreach($arr as $value){
+            if(ord($value)<128 && ord($value)>0){
+                $sCharCount = $sCharCount-1;
+            }else {
+                $sCharCount = $sCharCount-2;
+            }
+            if($sCharCount<=0){
+                break;
+            }
+            $string.=$value;
+        }
+        return $string;
+		if($suffix) return $string."…";
+		return $string;
 	}
 
-	//检查是否是正确的邮箱地址，是则返回true，否则返回false
-	public static function isEmail($user_email){
-		$chars = "/^([a-z0-9+_]|\\-|\\.)+@(([a-z0-9_]|\\-)+\\.)+[a-z]{2,6}\$/i";
-		if (strpos($user_email, '@') !== false && strpos($user_email, '.') !== false){
-			if (preg_match($chars, $user_email)){
-				return true;
-			}else{
-				return false;
-			}
-		}else{
-			return false;
-		}
-	}
-
-	// 检查字符串是否是UTF8编码,是返回true,否则返回false
+	/**
+	 * 判断UTF-8
+	 * @param  string  $string 字符串
+	 * @return boolean
+	 */
 	public static function isUtf8($string){
 		if( !empty($string) ) {
 			$ret = json_encode( array('code'=>$string) );
@@ -83,7 +101,13 @@ class Util{
 		return true;
 	}
 
-	// 自动转换字符集 支持数组转换
+	/**
+	 * 字符串转码
+	 * @param  string $fContents 字符串
+	 * @param  string $from      原始编码
+	 * @param  string $to        目标编码
+	 * @return string
+	 */
 	public static function auto_charset($fContents,$from='gbk',$to='utf-8'){
 		$from   =  strtoupper($from)=='UTF8'? 'utf-8':$from;
 		$to       =  strtoupper($to)=='UTF8'? 'utf-8':$to;
@@ -114,8 +138,14 @@ class Util{
 		}
 	}
 
-	//加密函数，可用cpDecode()函数解密，$data：待加密的字符串或数组；$key：密钥；$expire 过期时间
-	public static function cpEncode($data,$key='',$expire = 0){
+	/**
+	 * 加密函数
+	 * @param  mixed   $data   加密数据
+	 * @param  string  $key    密匙
+	 * @param  integer $expire 失效时间
+	 * @return string
+	 */
+	public static function cpEncode($data, $key='', $expire = 0){
 		$string=serialize($data);
 		$ckey_length = 4;
 		$key = md5($key);
@@ -154,7 +184,12 @@ class Util{
 		return $keyc.str_replace('=', '', base64_encode($result));		
 	}
 
-	//cpEncode之后的解密函数，$string待解密的字符串，$key，密钥
+	/**
+	 * 解密函数
+	 * @param  string $string 加密字符串
+	 * @param  string $key    密匙
+	 * @return mixed
+	 */
 	public static function cpDecode($string,$key=''){
 		$ckey_length = 4;
 		$key = md5($key);
@@ -198,7 +233,11 @@ class Util{
 		}	
 	}
 
-	//遍历删除目录和目录下所有文件
+	/**
+	 * 删除目录所有文件
+	 * @param  string $dir 路径
+	 * @return boolean
+	 */
 	public static function delDir($dir){
 		if (!is_dir($dir)){
 			return false;

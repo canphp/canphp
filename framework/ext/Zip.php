@@ -1,5 +1,11 @@
 <?php
+
+/**
+ * ZIP压缩与解压
+ */
+
 namespace framework\ext;
+
 class Zip
 {
 	protected $datasec = array();
@@ -8,8 +14,15 @@ class Zip
 	protected $old_offset = 0;
 	
 	protected $total_files = 0;
-	protected  $total_folders = 0; 
-	
+	protected  $total_folders = 0;
+
+	/**
+	 * 压缩目录
+	 * @param  string $zip_filename 文件名
+	 * @param  string $dir          压缩目录
+	 * @param  string $path_replace 替换目录
+	 * @return boolean
+	 */
 	public function compress($zip_filename='cp.zip', $dir='./', $path_replace='')
 	 {
     	if (function_exists('gzcompress')) 
@@ -39,9 +52,14 @@ class Zip
 		return false;
 	}
 
-
-	 public function decompress($zip_filename='cp.zip', $dir='./')
-	 {
+	/**
+	 * 解压文件
+	 * @param  string $zip_filename 解压文件
+	 * @param  string $dir          解压目录
+	 * @return boolean
+	 */
+	public function decompress($zip_filename='cp.zip', $dir='./')
+	{
 			$index = array(-1);
 			$ok = 0;
 			$zip_fp = @fopen($zip_filename,'rb');
@@ -73,7 +91,8 @@ class Zip
 			}
 			fclose($zip_fp);
 			return $stat;
-	 }
+	}
+
 	private function GetFileList($dir) 
 	{
     	$file=array();

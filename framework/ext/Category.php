@@ -1,78 +1,55 @@
 <?php
+
+/**
+ * 无限分类
+ */
+
 namespace framework\ext;
-/*
-功能:无限分类。
-作者：单骑闯天下 QQ:404352772;
-创建时间：2010-6-16;
-使用样例：
-<?php
-	require('Category.class.php');//导入Category.class.php类
-	//测试数据
-	$data[]=array('cat_id'=>1,'pid'=>0,'name'=>'中国');
-	$data[]=array('cat_id'=>2,'pid'=>0,'name'=>'美国');
-	$data[]=array('cat_id'=>3,'pid'=>0,'name'=>'韩国');
-	$data[]=array('cat_id'=>4,'pid'=>1,'name'=>'北京');
-	$data[]=array('cat_id'=>5,'pid'=>1,'name'=>'上海');
-	$data[]=array('cat_id'=>6,'pid'=>1,'name'=>'广西');
-	$data[]=array('cat_id'=>7,'pid'=>6,'name'=>'桂林');
-	$data[]=array('cat_id'=>8,'pid'=>6,'name'=>'南宁');
-	$data[]=array('cat_id'=>9,'pid'=>6,'name'=>'柳州');
-	$data[]=array('cat_id'=>10,'pid'=>2,'name'=>'纽约');
-	$data[]=array('cat_id'=>11,'pid'=>2,'name'=>'华盛顿');
-	$data[]=array('cat_id'=>12,'pid'=>3,'name'=>'首尔');
+
+class Category {	
+
+	/**
+	 * 原始数据
+	 * @var array
+	 */
+	private $rawList=array();
 	
-	$cat=new Category(array('cat_id','pid','name','cname'));
-	$s=$cat->getTree($data);//获取分类数据树结构
-	//$s=$cat->getTree($data,1);获取pid=1所有子类数据树结构
-	foreach($s as $vo)
-	{
-	 echo $vo['cname'].'<br>';
+	/**
+	 * 格式化数据
+	 * @var array
+	 */
+	private $formatList=array();
+
+	/**
+	 * 分类样式
+	 * @var array
+	 */
+	private $icon = array('│','├','└');
+
+	/**
+	 * 映射字段
+	 * @var array
+	 */
+	private $field=array();
+
+	/**
+	 * 初始化
+	 * @param array $field 字段映射
+	 */
+	public function __construct($field=array()) {	
+		$this->field['id']=isset($field['0'])?$field['0']:'id';
+		$this->field['pid']=isset($field['1'])?$field['1']:'pid';
+		$this->field['title']=isset($field['2'])?$field['2']:'title';
+		$this->field['fulltitle']=isset($field['3'])?$field['3']:'fulltitle';
 	}
-?>	
-*/
 
-class Category
-{	
-		//原始的分类数据
-		private $rawList=array();
-		//格式化后的分类
-		private $formatList=array();
-		//格式化的字符
-		private $icon = array('│','├','└');
-		//字段映射，分类id，上级分类pid,分类名称title,格式化后分类名称fulltitle
-		private $field=array();
-		
-/*
-功能：构造函数；
-属性：public;
-参数： $field，字段映射，分类id，上级分类pid,分类名称title,格式化后分类名称fulltitle
-	  依次传递,例如在分类数据表中，分类id，字段名为cid,上级分类pid,字段名称name,希望格式化分类后输出cname,
-	  则，传递参数为,$field('cid','pid','name','cname');若为空，则采用默认值。
-返回：无
-作者：单骑闯天下 QQ:404352772;
-创建时间：2010-6-16;
-最后修改时间：
-*/		
-		 public function __construct($field=array())
-		{			
-				$this->field['id']=isset($field['0'])?$field['0']:'id';
-				$this->field['pid']=isset($field['1'])?$field['1']:'pid';
-				$this->field['title']=isset($field['2'])?$field['2']:'title';
-				$this->field['fulltitle']=isset($field['3'])?$field['3']:'fulltitle';
-		}
-
-/*
-功能：返回给定上级分类$pid的所有同一级子分类；
-属性：public;
-参数：上级分类$pid；
-返回：子分类，二维数组；
-作者：单骑闯天下 QQ:404352772;
-创建时间：2010-6-16;
-最后修改时间：
-备注:
-*/		
-	public function getChild($pid,$data=array())
-	{
+	/**
+	 * 获取同级分类
+	 * @param  integer $pid  上级分类
+	 * @param  array  $data  分类数组
+	 * @return array
+	 */
+	public function getChild($pid,$data=array()) {
 			$childs=array();
 			if(empty($data))
 			{
@@ -86,18 +63,13 @@ class Category
 			return $childs;
 	}
 	
-/*
-功能：得到递归格式化分类；
-属性：public;
-参数：$data，二维数组，起始分类id,默认$id=0；
-返回：递归格式化分类数组；
-作者：单骑闯天下 QQ:404352772;
-创建时间：2010-6-16;
-最后修改时间：2010-12-19
-备注:
-*/		
-	public function getTree($data,$id=0)
-	{
+	/**
+	 * 获取树形分类
+	 * @param  array   $data 分类数组
+	 * @param  integer $id   起始上级分类
+	 * @return array
+	 */
+	public function getTree($data,$id=0) {
 		//数据为空，则返回
 		if(empty($data))
 			return false;
@@ -108,8 +80,15 @@ class Category
 		$this->_searchList($id);
 		return $this->formatList;
 	}
-	//获取当前分类的路径
-	public function getPath($data,$id){
+
+	/**
+	 * 获取分类路径
+	 * @param  array  $data 分类数组
+	 * @param  integer $id  当前分类
+	 * @return array
+	 */
+	public function getPath($data,$id) {
+
 		$this->rawList=$data;
 		while(1){
 			$id=$this->_getPid($id);
@@ -119,18 +98,14 @@ class Category
 		}
 		return array_reverse($this->formatList);
 	}
-/*
-功能：无限分类核心部分，递归格式化分类前的字符；
-属性：private;
-参数：分类id,前导空格；
-返回：无；
-作者：单骑闯天下 QQ:404352772;
-创建时间：2010-6-16;
-最后修改时间：
-备注:
-*/
-	private function _searchList($id=0,$space="")
-	{
+
+	/**
+	 * 递归分类
+	 * @param  integer $id    上级分类ID
+	 * @param  string  $space 空格
+	 * @return void
+	 */
+	private function _searchList($id=0, $space="") {
 		//下级分类的数组
 		$childs=$this->getChild($id);
 		//如果没下级分类，结束递归
@@ -159,11 +134,13 @@ class Category
 		}
 	}
 	
-	//通过当前id获取pid
-	private function _getPid($id)
-	{
-		foreach($this->rawList as $key=>$value){
-		
+	/**
+	 * 获取PID
+	 * @param  integer $id 当前ID
+	 * @return integer
+	 */
+	private function _getPid($id) {
+		foreach($this->rawList as $key=>$value) {
 			if($this->rawList[$key][$this->field['id']]==$id)
 			{
 				$this->formatList[]=$this->rawList[$key];

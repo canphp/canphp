@@ -1,14 +1,26 @@
 <?php
+
+/**
+ * 图像处理类
+ */
+
 namespace framework\ext;
 
-//生成图像缩略图和生成验证码
 class Image {
-	//生成图像验证码
+	
+	/**
+	 * 生成数字验证码
+	 * @param  integer $width      宽度
+	 * @param  integer $height     高度
+	 * @param  string  $randval    验证码范围
+	 * @param  string  $verifyName session名
+	 * @return image
+	 */
     static public function buildImageVerify($width=48,$height=22,$randval=NULL,$verifyName='verify') {
-		if( !isset($_SESSION) ) {
+		if(!isset($_SESSION)) {
 			session_start();//如果没有开启，session，则开启session
 		}		
-		$randval =empty($randval)? ("".rand(1000,9999)):$randval;
+		$randval = empty($randval)? ("".rand(1000,9999)):$randval;
 		$_SESSION[$verifyName]= $randval;
 		$length=4;
 		$width = ($length*10+10)>$width?$length*10+10:$width;
@@ -40,7 +52,16 @@ class Image {
 		self::output($im,'png');
     }
 	
-	//生成缩略图
+	/**
+	 * 生成缩略图
+	 * @param  stromg  $image     原始图片名
+	 * @param  stromg  $thumbname 缩略图名
+	 * @param  string  $domain    储存域
+	 * @param  integer $maxWidth  最大宽度
+	 * @param  integer $maxHeight 最大高度
+	 * @param  boolean $interlace 逐行扫描
+	 * @return boolean
+	 */
     static public function thumb($image, $thumbname, $domain = 'public', $maxWidth=200, $maxHeight=50, $interlace=true) {
         // 获取原图信息
 		$info  = self::getImageInfo($image);
@@ -113,7 +134,15 @@ class Image {
      * @$water 水印图片
      * @$$waterPos 水印位置(0-9) 0为随机，其他代表上中下9个部分位置
      */
-    static public function water($image, $water, $waterPos =9) {
+    
+    /**
+     * 图片水印
+     * @param  string  $image    原始图片名
+     * @param  string  $water    水印图片
+     * @param  integer $waterPos 水印位置
+     * @return boolean
+     */
+    static public function water($image, $water, $waterPos = 9) {
 	    //检查图片是否存在
         if (!file_exists($image) || !file_exists($water))
             return false;
@@ -188,6 +217,11 @@ class Image {
         imagedestroy($image_im);
     }
 
+    /**
+     * 获取图片信息
+     * @param  string $img 图片名
+     * @return array
+     */
     static protected function getImageInfo($img) {
         $imageInfo = getimagesize($img);
         if( $imageInfo!== false) {
@@ -205,8 +239,15 @@ class Image {
             return false;
         }
     }
-	
-    static protected function output($im,$type='png',$filename='') {
+
+    /**
+     * 输出图片
+     * @param  object $im       图片对象
+     * @param  string $type     图片类型
+     * @param  string $filename 文件名
+     * @return void
+     */
+    static protected function output($im, $type='png', $filename='') {
 		header("Content-type: image/".$type);
 		$ImageFun='image'.$type;
 		if(empty($filename)) {

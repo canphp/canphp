@@ -1,10 +1,19 @@
 <?php
+
+/**
+ * XML转换数组
+ */
+
 namespace framework\ext;
-//xml解析成数组
-class Xml
-{
-	public static function decode($xml)
-	{
+
+class Xml {
+
+	/**
+	 * XML转数组
+	 * @param  string $xml XML内容
+	 * @return array
+	 */
+	public static function decode($xml) {
 		$values = array();
 		$index  = array();
 		$array  = array();
@@ -19,9 +28,14 @@ class Xml
 		$array[$name] = self::_struct_to_array($values, $i);
 		return $array;
 	}
-	
-	private static function _struct_to_array($values, &$i)
-	{
+
+	/**
+	 * 节点转换
+	 * @param  string $values XML数据
+	 * @param  integer &$i    指针
+	 * @return array
+	 */
+	private static function _struct_to_array($values, &$i) {
 		$child = array();
 		if (isset($values[$i]['value'])) 
 		array_push($child, $values[$i]['value']);

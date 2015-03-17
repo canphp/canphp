@@ -1,35 +1,34 @@
 <?php
-namespace framework\ext;
-/*
-汉字转化为拼音类
+
+/**
+ * 汉字转拼音
  */
-class Pinyin{
+
+namespace framework\ext;
+
+class Pinyin {
 	
 	/**
 	 * 汉字ASCII码库
-	 * 
 	 * @var array
 	 */
 	protected $lib;
 	
-	
 	/**
 	 * 构造函数
-	 * 
 	 * @return void
 	 */
-	public function __construct(){
+	public function __construct() {
 		
 	}
+
 	/**
 	 * 汉字转化并输出拼音
-	 * 
-	 * @param string $str		所要转化拼音的汉字
-	 * @param boolean $utf8 	汉字编码是否为utf8
+	 * @param string $str	所要转化拼音的汉字
+	 * @param boolean $utf8 汉字编码是否为utf8
 	 * @return string
 	 */
-	public function output($str, $utf8 = true)
-	{		
+	public function output($str, $utf8 = true) {		
 		//参数分析
 		if (!$str) {
 			return false;
@@ -52,9 +51,9 @@ class Pinyin{
 		//输出的拼音编码转换.
 		return ($utf8==true) ? $this->iconvStr('gbk', 'utf-8', $pinyin) : $pinyin;
 	}
+
 	/**
-	 * 将ASCII编码转化为字符串.
-	 * 
+	 * 将ASCII编码转化为字符串
 	 * @param integer $num
 	 * @return string
 	 */
@@ -81,10 +80,40 @@ class Pinyin{
 			return $this->lib[$i][0];
 		}
 	}
+      
+      /**
+       * 编码转换
+       * @param  string $from      原始编码
+       * @param  string $to        目标编码
+       * @param  string $fContents 字符串
+       * @return string
+       */
+      protected function iconvStr($from, $to, $fContents) {
+                  if(is_string($fContents)){
+                        if(function_exists('mb_convert_encoding')){
+                              return mb_convert_encoding ($fContents, $to, $from);
+                        } else if(function_exists('iconv')) {
+                              return iconv($from,$to,$fContents);
+                        } else {
+                              return $fContents;
+                        }
+            }
+      }
+
+      /**
+       * 析构函数
+       * 
+       * @access public
+       * @return void
+       */
+      public function __destruct() {           
+            if (isset($this->lib)) {
+                  unset($this->lib);
+            }
+      }
 
 	/**
 	 * 返回汉字编码库
-	 * 
 	 * @return array
 	 */
 	protected function parse_lib() {
@@ -488,37 +517,5 @@ class Pinyin{
 			array("zun",-10256),
 			array("zuo",-10254),
 		);
-	}
-	
-	//编码转换
-	protected function iconvStr($from,$to,$fContents)
-	{
-			if(is_string($fContents) ) 
-			{
-				if(function_exists('mb_convert_encoding'))
-				{
-					return mb_convert_encoding ($fContents, $to, $from);
-				}
-				else if(function_exists('iconv'))
-				{
-					return iconv($from,$to,$fContents);
-				}
-				else
-				{
-					return $fContents;
-				}
-		}
-	}
-	/**
-	 * 析构函数
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function __destruct()
-	{		
-		if (isset($this->lib)) {
-			unset($this->lib);
-		}
 	}
 }

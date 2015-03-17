@@ -1,12 +1,25 @@
 <?php
+
+/**
+ * 邮件发送类
+ */
+
 namespace framework\ext;
-//邮件发送类,基于PHPMailer类
-class Email
-{
-	static public $config;//存储配置的静态变量
-	//设定邮件参数
-    static public function init($config = array()) 
-    {
+
+class Email {
+
+	/**
+	 * 邮件配置
+	 * @var array
+	 */
+	static public $config;
+	
+	/**
+	 * 初始化
+	 * @param  array  $config 发件配置
+	 * @return void
+	 */
+    static public function init($config = array()) {
  		self::$config['SMTP_HOST']=isset($config['SMTP_HOST'])?$config['SMTP_HOST']:'smtp.qq.com';//smtp服务器地址
 		self::$config['SMTP_PORT']=isset($config['SMTP_PORT'])?$config['SMTP_PORT']:25;//smtp服务器端口
 		self::$config['SMTP_SSL']=isset($config['SMTP_SSL'])?$config['SMTP_SSL']:false;//是否启用SSL安全连接	，gmail需要启用sll安全连接
@@ -19,15 +32,21 @@ class Email
 		self::$config['SMTP_DEBUG']=isset($config['SMTP_DEBUG'])?$config['SMTP_DEBUG']:false;//是否显示调试信息	
 
     }
-	//发送邮件
-	static public function send($mail_to,$mail_subject,$mail_body,$mail_attach=NULL)
-	{
+
+	/**
+	 * 邮件发送
+	 * @param  string $mail_to      收件人
+	 * @param  string $mail_subject 标题
+	 * @param  string $mail_body    邮件内容
+	 * @param  mixed  $mail_attach  附件
+	 * @return boolean
+	 */
+	static public function send($mail_to,$mail_subject,$mail_body,$mail_attach=NULL) {
 		@error_reporting(E_ERROR | E_WARNING | E_PARSE);//屏蔽出错信息
          require_once(dirname(__FILE__).'/phpmailer/class.phpmailer.php');
 	    $mail             = new PHPMailer();
 		//没有调用配置方法，则调用一次config方法
-		if(!isset(self::$config)||empty(self::$config))
-		{
+		if(!isset(self::$config)||empty(self::$config)){
 			self::config();
 		}
 		$mail->IsSMTP(); //// 使用SMTP方式发送
@@ -40,63 +59,50 @@ class Email
 		$mail->SetFrom(self::$config['SMTP_FROM_TO'], self::$config['SMTP_FROM_NAME']);	// 发件人的邮箱和姓名
 		$mail->AddReplyTo(self::$config['SMTP_FROM_TO'],self::$config['SMTP_FROM_NAME']);// 回复时的邮箱和姓名，一般跟发件人一样
 		//是否启用SSL安全连接	
-		if(self::$config['SMTP_SSL'])
-		{
+		if(self::$config['SMTP_SSL']){
 			$mail->SMTPSecure = "ssl"; //gmail需要启用sll安全连接
 		}
 		//开启调试信息
-		if(self::$config['SMTP_DEBUG'])
-		{
+		if(self::$config['SMTP_DEBUG']){
 			$mail->SMTPDebug  = 1; 
 		}
 		
 		$mail->Subject    = $mail_subject;//邮件标题
 		$mail->MsgHTML($mail_body);//邮件内容，支持html代码
 		//发送邮件
-		if(is_array($mail_to))
-		{
+		if(is_array($mail_to)){
 				//同时发送给多个人
-				foreach($mail_to as $key=>$value)
-				{
-					$mail->AddAddress($value,"");  // 收件人邮箱和姓名
-				}
-		}
-		else
-		{		//只发送给一个人
+			foreach($mail_to as $key=>$value){
+				$mail->AddAddress($value,"");  // 收件人邮箱和姓名
+			}
+		} else {		//只发送给一个人
 				$mail->AddAddress($mail_to,"");  // 收件人邮箱和姓名
 		}
 
 		//发送多个附件
-		if(is_array($mail_attach))
-		{
-			foreach($mail_attach as $value)
-			{
-				if(file_exists($value))//附件必须存在，才会发送
-				{
+		if(is_array($mail_attach)){
+			foreach($mail_attach as $value){
+				if(file_exists($value)){
+					//附件必须存在，才会发送
 					$mail->AddAttachment($value); // attachment
 				}
 			}
 		}
-		//发送一个附件
-		if(!empty($mail_attach)&&is_string($mail_attach))
-		{
 		
-				if(file_exists($mail_attach))//附件必须存在，才会发送
-				{
+		//发送一个附件
+		if(!empty($mail_attach)&&is_string($mail_attach)){
+				if(file_exists($mail_attach)){
+					//附件必须存在，才会发送
 					$mail->AddAttachment($mail_attach); //发送附件
 				}
 		}
 		
-		if(!$mail->Send()) 
-		{
-			if(self::$config['SMTP_DEBUG'])
-		 	{
+		if(!$mail->Send()) {
+			if(self::$config['SMTP_DEBUG']){
 				echo "Mailer Error: " . $mail->ErrorInfo;
 			}
 		  	return false;		  
-		} 
-		else 
-		{
+		} else {
 		    return true;
 		}
 	}

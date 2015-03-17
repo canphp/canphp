@@ -1,15 +1,21 @@
 <?php
+
+/**
+ * 数据库安装类
+ */
+
 namespace framework\ext;
-//数据库安装类,用于导入mysql数据库文件
+
 class Install{
 
-    /*
-		参数：
-		$sql_path:sql文件路径；
-		$old_prefix:原表前缀；
-		$new_prefix:新表前缀；
-		$separator:分隔符 参数可为";\n"或";\r\n"或";\r"
-	*/
+    /**
+     * 获取SQL语句
+     * @param  string $sql_path   SQL文件路径
+     * @param  string $old_prefix 原始前缀
+     * @param  string $new_prefix 新前缀
+     * @param  string $separator  换行符
+     * @return array
+     */
     static public function mysql($sql_path,$old_prefix="",$new_prefix="",$separator=";\n") 
     {
         $commenter = array('#','--');
