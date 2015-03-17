@@ -1,7 +1,23 @@
 <?php
+
+/**
+ * 公共模型类
+ */
+
 namespace framework\base;
+
 class Model{
+
+	/**
+	 * 模型配置
+	 * @var array
+	 */
 	protected $config =array();
+
+	/**
+	 * 操作参数
+	 * @var array
+	 */
 	protected $options = array(
 							'table' => '',
 							'field' => '*',
@@ -11,12 +27,41 @@ class Model{
 							'data' => array(),
 							'pager' => array(),
 				);
+
+	/**
+	 * 数据库配置名
+	 * @var string
+	 */
 	protected $database = 'default';
+
+	/**
+	 * 操作表
+	 * @var string
+	 */
 	protected $table = '';	
+
+	/**
+	 * 当前表
+	 * @var null
+	 */
 	protected $trueTable = null;
+
+	/**
+	 * 驱动对象
+	 * @var array
+	 */
 	protected static $objArr = array();
+
+	/**
+	 * 分页信息
+	 * @var null
+	 */
 	public $pager = null;
-	
+
+	/**
+	 * 初始化
+	 * @param string $database 模型配置名
+	 */
 	public function __construct( $database = 'default' ) {
 		if( $database ){
 			$this->database = $database;
@@ -29,7 +74,13 @@ class Model{
 		$this->trueTable = $this->table;
 		$this->table($this->trueTable, true);
 	}
-			
+
+	/**
+	 * 执行SQL查询
+	 * @param  string $sql    SQL语句
+	 * @param  array  $params 过滤参数
+	 * @return [type]         [description]
+	 */
 	public function query($sql, $params = array()) {
 		$sql = trim($sql);
 		if ( empty($sql) ) return array();
