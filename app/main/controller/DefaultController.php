@@ -3,8 +3,8 @@ namespace app\main\controller;
 class DefaultController extends \app\base\controller\BaseController{
 	
 	public function index(){
-		$this->title = model('Demo')->getTitle();
-		$this->hello = model('Demo')->getHello();
+		$this->title = obj('Demo')->getTitle();
+		$this->hello = obj('Demo')->getHello();
 		$this->display();
 	}
 }

@@ -57,11 +57,11 @@ function obj($class, $layer = 'model'){
 	switch ($paramCount) {
 		case 1:
 			$app = APP_NAME;
-			$module = $str[0];
+			$module = $param[0];
 			break;
 		case 2:
-			$app = $str[0];
-			$module = $str[1];
+			$app = $param[0];
+			$module = $param[1];
 			break;
 	}
 	$app = strtolower($app);

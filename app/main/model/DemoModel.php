@@ -1,6 +1,6 @@
 <?php
 namespace app\main\model;
-class Demo extends \app\base\model\BaseModel{
+class DemoModel extends \app\base\model\BaseModel{
 	protected $table = 'test';
 	
 	public function getTitle(){

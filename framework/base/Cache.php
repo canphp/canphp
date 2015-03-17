@@ -58,7 +58,7 @@ class Cache {
      * @param  [type] $args   回调参数
      * @return object
      */
-	public function __call('$method', $args) {
+	public function __call($method, $args) {
 		if( !isset(self::$objArr[$this->cache]) ){		
 			$cacheDriver = __NAMESPACE__.'\cache\\' . ucfirst( $this->config['CACHE_TYPE'] ).'Driver';
 			if( !class_exists($cacheDriver) ) {

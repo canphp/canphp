@@ -14,9 +14,7 @@ class App {
 	static protected function init() {
 		Config::init( BASE_PATH );
 		Config::loadConfig( CONFIG_PATH . 'global.php' );
-		if(defined('ENV')){
-			Config::loadConfig( CONFIG_PATH . Config::get('ENV') . '.php' );
-		);
+		Config::loadConfig( CONFIG_PATH . Config::get('ENV') . '.php' );
 		date_default_timezone_set( Config::get('TIMEZONE') );
 		
 		//error display
