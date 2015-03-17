@@ -4,6 +4,12 @@
  * 框架核心
  */
 
+if (version_compare(PHP_VERSION, '5.3.0','<')) {
+	header("Content-Type: text/html; charset=UTF-8");
+    echo 'PHP环境不能低于5.3.0';
+    exit;
+}
+
 if( !defined('ROOT_PATH') ) define('ROOT_PATH', realpath('./').DIRECTORY_SEPARATOR);
 if( !defined('BASE_PATH') ) define('BASE_PATH', realpath('./').DIRECTORY_SEPARATOR);
 if( !defined('CONFIG_PATH') ) define('CONFIG_PATH', BASE_PATH.'data/config/');
