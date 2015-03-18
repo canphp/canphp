@@ -39,5 +39,15 @@ Interface ImageInterface {
      * @return boolean
      */
     public function output($filename, $type = null);
+
+    /**
+     * 获取错误信息
+     */
+    public function getError();
+
+    /**
+     * 获取图片信息
+     */
+    public function getInfo();
 		
 }

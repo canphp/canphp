@@ -9,15 +9,15 @@ namespace framework\ext\upload;
 class LocalDriver implements UploadInterface{
 
 	protected $config = array();
-	protected $error = '';
+	protected $errorMsg = '';
 
     public function __construct( $config = array() ) {
 		$this->config = $config;
     }
 
     public function rootPath($path) {
-    	if(!(is_dir($rootpath) && is_writable($rootpath))){
-            $this->error = '上传根目录不存在！';
+    	if(!(is_dir($path) && is_writable($path))){
+            $this->errorMsg = '上传根目录不存在！';
             return false;
         }
         return true;
@@ -28,7 +28,7 @@ class LocalDriver implements UploadInterface{
             return false;
         } else {
             if (!is_writable($path)) {
-                $this->error = "上传目录 '{$path}' 不可写入！";
+                $this->errorMsg = "上传目录 '{$path}' 不可写入！";
                 return false;
             } else {
                 return true;
@@ -41,7 +41,7 @@ class LocalDriver implements UploadInterface{
 			return $file;
 			return true;
 		}
-		$this->error = '文件上传保存错误！';
+		$this->errorMsg = '文件上传保存错误！';
 		return false;
     }
 
@@ -53,12 +53,12 @@ class LocalDriver implements UploadInterface{
         if(mkdir($dir, 0777, true)){
             return true;
         } else {
-            $this->error = "上传目录 '{$path}' 创建失败！";
+            $this->errorMsg = "上传目录 '{$path}' 创建失败！";
             return false;
         }
     }
 
     public function getError(){
-        return $this->error;
+        return $this->errorMsg;
     }
 }

@@ -6,11 +6,13 @@
 
 namespace framework\ext\image;
 
-class Image implements ImageInterface {
+class GdDriver implements ImageInterface {
 
     protected $imgRes;
 
     protected $info = array();
+
+    protected $errorMsg = '';
 
 	/**
 	 * 构建函数
@@ -18,17 +20,19 @@ class Image implements ImageInterface {
 	 */
     public function __construct($img) {
     	if(!is_file($img)){
-    		throw new \Exception('不存在图片文件！');
+    		$this->errorMsg = '图片不存在！';
+            return false;
     	}
-    	$imgInfo = getimagesize($imgname);
-    	if($imgInfo){
-    		throw new \Exception('非法图像资源！');
+    	$imgInfo = getimagesize($img);
+    	if(empty($imgInfo)){
+            $this->errorMsg = '非法图像资源！';
+            return false;
     	}
     	$this->info = array(
     		'width'  => $imgInfo[0],
     		'height' => $imgInfo[1],
-    		'type'   => image_type_to_extension($info[2], false),
-    		'mime'   => $info['mime'],
+    		'type'   => image_type_to_extension($imgInfo[2], false),
+    		'mime'   => $imgInfo['mime'],
     		);
     	$img = file_get_contents($img);
     	$this->imgRes = @imagecreatefromstring($img);
@@ -45,6 +49,10 @@ class Image implements ImageInterface {
      * @return object
      */
     public function crop($w, $h, $x = 0, $y = 0, $width = null, $height = null) {
+        if(empty($this->imgRes)){
+            $this->errorMsg = '图像处理失败！';
+            return false;
+        }
     	empty($width)  && $width  = $w;
         empty($height) && $height = $h;
     	$img = imagecreatetruecolor($width, $height);
@@ -105,8 +113,12 @@ class Image implements ImageInterface {
      * @return object
      */
     public function water($source, $locate = 0, $alpha=80){
+        if(empty($this->imgRes)){
+            $this->errorMsg = '图像处理失败！';
+            return false;
+        }
     	$info = getimagesize($source);
-    	if($imgInfo){
+    	if(!$info){
     		throw new \Exception('非法图像资源！');
     	}
     	$fun   = 'imagecreatefrom' . image_type_to_extension($info[2], false);
@@ -179,6 +191,10 @@ class Image implements ImageInterface {
      * @return boolean
      */
     public function output($filename, $type = null){
+        if(empty($this->imgRes)){
+            $this->errorMsg = '图像处理失败！';
+            return false;
+        }
         if(!$type){
             $type = $this->info['type'];
         } else {
@@ -190,15 +206,30 @@ class Image implements ImageInterface {
         	$func = 'image'.$type;
         }
         if (!function_exists($func)) {
+            $this->error = '无法对该图片格式进行处理！';
             return false;
         }
-        return $fun($this->img, $filename);
+        return $func($this->imgRes, $filename);
+    }
+
+    /**
+     * 获取错误信息
+     */
+    public function getError() {
+        return $this->errorMsg;
+    }
+
+    /**
+     * 获取图片信息
+     */
+    public function getInfo() {
+        return $this->info;
     }
 
     /**
      * 析构函数
      */
     public function __destruct() {
-        $this->imgRes;
+        imagedestroy($this->imgRes);
     }
 }

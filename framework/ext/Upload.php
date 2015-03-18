@@ -13,7 +13,7 @@ class Upload {
 	 * @var array
 	 */
 	protected $config = array(
-        'maxSize'       =>  0, //上传的文件大小限制 (0-不做限制)
+        'maxSize'       =>  1048576, //上传的文件大小限制 默认10M
         'allowExts'     =>  array(), //允许的文件后缀
         'rootPath'      =>  './upload/', //上传根路径
         'savePath'      =>  '', //保存路径
@@ -136,7 +136,7 @@ class Upload {
 	 */
 	protected function setDriver() {
 		$uploadDriver = __NAMESPACE__.'\upload\\' . ucfirst( $this->config['driver'] ).'Driver';
-		$this->uploader = new $uploadDriver($config);
+		$this->uploader = new $uploadDriver($this->config);
 		if(!$this->uploader){
             throw new \Exception("Upload Driver '{$this->config['driver']}' not found'", 500);
         }
@@ -155,7 +155,7 @@ class Upload {
      * @return string
      */
     public function getError(){
-        return $this->error;
+        return $this->errorMsg;
     }
 
 }
