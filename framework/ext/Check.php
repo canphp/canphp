@@ -9,7 +9,7 @@ namespace framework\ext;
 class Check {
 
 	/**
-	 * 批量验证
+	 * 验证提示规则
 	 * array(array(验证函数1，'错误返回值1'), array(验证函数2，'错误返回值2'))
 	 * 
 	 * @param  array  $array 验证规则
