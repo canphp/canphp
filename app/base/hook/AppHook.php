@@ -1,7 +1,9 @@
 <?php
+
 /**
  * 框架启动钩子
  */
+
 namespace app\base\hook;
 
 class AppHook {
@@ -39,7 +41,7 @@ class AppHook {
 		}else{
 			$action = 'error';
 		}
-		obj('app\base\controller\ErrorController')->$action($e);
+		obj('base/Error','controller')->$action($e);
 	}
 
 	/**

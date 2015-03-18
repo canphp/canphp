@@ -19,7 +19,7 @@ class Hook {
 	 * @param  string $basePath 钩子目录
 	 * @return boolean
 	 */
-	static public function init($basePath='') {		
+	static public function init($basePath='') {
 		$dir = str_replace('/', DIRECTORY_SEPARATOR, $basePath.'app/base/hook/');
 		foreach(glob($dir . '*.php') as $file){
 			$pos = strrpos($file, DIRECTORY_SEPARATOR);
@@ -31,7 +31,7 @@ class Hook {
 			$methods = get_class_methods($class);
 			foreach((array)$methods as $method){
 				self::$tags[$method][] = $class;
-			}		
+			}	
 		}
 	}
 

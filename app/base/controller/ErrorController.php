@@ -6,7 +6,7 @@
 
 namespace app\base\controller;
 
-class ErrorController extends BaseControlle r{
+class ErrorController extends BaseController {
 	
 	/**
 	 * 404错误
