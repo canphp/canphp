@@ -54,6 +54,26 @@ class Controller {
 	}
 
 	/**
+	 * 判断get提交
+	 * @return boolean
+	 */
+	public function isGet(){
+		return $_SERVER['REQUEST_METHOD'] == 'GET';
+	}
+
+	/**
+	 * 判断ajax提交
+	 * @return boolean
+	 */
+	public function isAjax(){
+		if(((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'))){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	/**
 	 * 页面跳转
 	 * @param  string  $url  跳转地址
 	 * @param  integer $code 跳转代码
