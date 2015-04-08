@@ -28,10 +28,22 @@ class Form {
 		if(empty($data)) {
 			$data = array_merge((array)$_GET, (array)$_POST);
 		}
-		if(is_array($data)){
-			array_walk_recursive($data, function(&$v, $k){$v = trim(htmlspecialchars($v, ENT_QUOTES, 'UTF-8'));} );
-		}
-		$this->data = $data;
+		$this->data = $this->filterData($data);	}
+
+	/**
+	 * 过滤数据
+	 * @param  array $data 数据
+	 * @return array
+	 */
+	protected function filterData($data) {
+		if (is_array($data)){
+	        foreach ($data as $k=>$v){
+	            $data[$k] = $this->filterData($v);
+	        }
+	        return $data;
+	    }else{
+	        return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+	    }
 	}
 
 	/**
@@ -183,4 +195,105 @@ class Form {
         	return false;
         }
 	}
+
+	/**
+	 * html转换字符串
+	 * @param  string $html HTML内容
+	 * @return string
+	 */
+	public function htmlEncode($html){
+		return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+	}
+
+	/**
+	 * 字符串转换html
+	 * @param  string $html HTML内容
+	 * @return string
+	 */
+	public function htmlDecode($html){
+		return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+	}
+
+	/**
+	 * 清理HTML
+	 * @param  string $html HTML内容
+	 * @return string
+	 */
+	public function filterHtml($html){
+		$html = $this->htmlDecode($html);
+		return strip_tags($str);
+	}
+
+	/**
+	 * 过滤非HTTP协议
+	 * @param  string $uri URI地址
+	 * @return string
+	 */
+	public function filterUri($uri) {
+		$uri = $this->htmlDecode($uri);
+		$allowed_protocols = array('http' => true, 'https' => true);
+        do {
+            $before = $uri;
+            $colonpos = strpos($uri, ':');
+            if ($colonpos > 0) {
+                $protocol = substr($uri, 0, $colonpos);
+                if (preg_match('![/?#]!', $protocol)) {
+                    break;
+                }
+                if (!isset($allowed_protocols[strtolower($protocol)])) {
+                    $uri = substr($uri, $colonpos + 1);
+                }
+            }
+        } while ($before != $uri);
+
+        return $uri;
+	}
+
+	/**
+	 * 过滤XSS
+	 * @param  string $html HTML内容
+	 * @return string
+	 */
+	public function filterXss($html, $allowedTags, $allowedStyleProperties) {
+		static $xss;
+		if(!isset($xss)) {
+			$xss = new \framework\ext\Xss();
+		}
+		return $xss->filter($html, $allowedTags, $allowedStyleProperties);
+	}
+
+	/**
+	 * 获取生成令牌
+	 * @param  string $key 生成密钥
+	 * @return string
+	 */
+	public function tokenGet($key) {
+		static $encrypter;
+		if(!isset($encrypter)) {
+			$encrypter = new \framework\ext\Encrypter($key);
+		}
+		return $encrypter->encrypt($encrypter->getId());
+	}
+
+	/**
+	 * 验证令牌
+	 * @param  string $str 提交令牌
+	 * @param  string $key 密钥
+	 * @return string
+	 */
+	public function tokenVerify($str, $key) {
+		static $encrypter;
+		if(!isset($encrypter)) {
+			$encrypter = new \framework\ext\Encrypter($key);
+		}
+		$code = $encrypter->decrypt($str);
+		print_r('xxx');
+		print_r($code);
+		if(!$encrypter->isId($uuid)){
+			return false;
+		}
+		return $code;
+
+	}
+
 }
