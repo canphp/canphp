@@ -29,6 +29,8 @@ class Xss {
      * 允许的style域名
      */
     protected $allowedStyleDomain = array();
+
+    
     
     /**
      * 执行Xss filter
@@ -38,7 +40,7 @@ class Xss {
      */
     public function filter($string, $allowedTags = array(), $allowedStyleProperties = array()) {
         //非UTF8编码直接置空
-        if (!String::isUTF8($string)) {
+        if (!$this->isUTF8($string)) {
             return '';
         }
         //设置tags
@@ -232,7 +234,7 @@ class Xss {
             //对style深度清理
             if ($name == 'style') {
                 $sanitized_properties = array();
-                $properties = array_filter(array_map('trim', explode(';', String::decodeEntities($info['value']))));
+                $properties = array_filter(array_map('trim', explode(';', $this->decodeEntities($info['value']))));
                 foreach ($properties as $property) {
                     if (!preg_match('#^([a-zA-Z][-a-zA-Z]*)\s*:\s*(.*)$#', $property, $property_matches)) {
                         continue;
@@ -253,7 +255,7 @@ class Xss {
                             $url[1] = substr($url[1], 1, -1);
                         }
                         $url = preg_replace('`\\\\([(),\'"\s])`', '\1', $url[1]);
-                        if (String::filterBadProtocol($url) != $url) {
+                        if ($this->filterBadProtocol($url) != $url) {
                             continue;
                         }
                         if (!preg_match('`^/[^/]+`', $url)) {
@@ -269,7 +271,7 @@ class Xss {
                             }
                         }
                     }
-                    $sanitized_properties[] = $property_name . ':' . String::checkPlain($property_value);
+                    $sanitized_properties[] = $property_name . ':' . $this->checkPlain($property_value);
                 }
                 if (empty($sanitized_properties)) {
                     unset($return[$name]);
@@ -278,7 +280,7 @@ class Xss {
                 $info['value'] = implode('; ', $sanitized_properties);
             }
             else {
-                $info['value'] = String::filterBadProtocol($info['value']);
+                $info['value'] = $this->filterBadProtocol($info['value']);
             }
             
             $return[$name] = $name . '=' . $info['delimiter'] . $info['value'] . $info['delimiter'];
@@ -313,6 +315,60 @@ class Xss {
             }
         }
         return $this;
+    }
+
+    /**
+     * 是否为UTF-8编码
+     */
+    public function isUTF8($text) {
+        if (strlen($text) == 0) {
+            return true;
+        }
+        return (preg_match('/^./us', $text) == 1);
+    }
+
+    /**
+     * 过滤链接协议字符
+     */
+    public function filterBadProtocol($string) {
+        $string = static::decodeEntities($string);
+        return static::checkPlain($this->stripDangerousProtocols($string));
+    }
+    
+    /**
+     * 过滤非法Uri
+     */
+    public function stripDangerousProtocols($uri) {
+        $allowed_protocols = array('http' => true, 'https' => true);
+        do {
+            $before = $uri;
+            $colonpos = strpos($uri, ':');
+            if ($colonpos > 0) {
+                $protocol = substr($uri, 0, $colonpos);
+                if (preg_match('![/?#]!', $protocol)) {
+                    break;
+                }
+                if (!isset($allowed_protocols[strtolower($protocol)])) {
+                    $uri = substr($uri, $colonpos + 1);
+                }
+            }
+        } while ($before != $uri);
+
+        return $uri;
+    }
+
+    /**
+     * 转义HTML
+     */
+    public function checkPlain($text) {
+        return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+    }
+
+    /**
+     * 反转义HTML
+     */
+    public function decodeEntities($text) {
+        return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
     }
 
 }

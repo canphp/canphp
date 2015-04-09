@@ -42,7 +42,12 @@ class Form {
 	        }
 	        return $data;
 	    }else{
-	        return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
+	    	//还原自动转义
+	    	if(get_magic_quotes_gpc()) {
+	    		$data = stripslashes($data);
+	    	}
+	    	return $this->htmlEncode($data);
+	        
 	    }
 	}
 
@@ -202,7 +207,7 @@ class Form {
 	 * @return string
 	 */
 	public function htmlEncode($html){
-		return html_entity_decode($text, ENT_QUOTES, 'UTF-8');
+		return htmlspecialchars($html, ENT_QUOTES, 'UTF-8');
 	}
 
 	/**
@@ -211,7 +216,7 @@ class Form {
 	 * @return string
 	 */
 	public function htmlDecode($html){
-		return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+		return html_entity_decode($html, ENT_QUOTES, 'UTF-8');
 	}
 
 	/**
@@ -254,11 +259,12 @@ class Form {
 	 * @param  string $html HTML内容
 	 * @return string
 	 */
-	public function filterXss($html, $allowedTags, $allowedStyleProperties) {
+	public function filterXss($html, $allowedTags = array(), $allowedStyleProperties = array()) {
 		static $xss;
 		if(!isset($xss)) {
 			$xss = new \framework\ext\Xss();
 		}
+		$html = $this->htmlDecode($html);
 		return $xss->filter($html, $allowedTags, $allowedStyleProperties);
 	}
 
@@ -287,8 +293,6 @@ class Form {
 			$encrypter = new \framework\ext\Encrypter($key);
 		}
 		$code = $encrypter->decrypt($str);
-		print_r('xxx');
-		print_r($code);
 		if(!$encrypter->isId($uuid)){
 			return false;
 		}
