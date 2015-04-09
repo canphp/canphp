@@ -22,13 +22,14 @@ class Form {
 
 	/**
 	 * 构建函数
-	 * @param array $data 验证数据
+	 * @param array $data 表单数据
 	 */
 	public function __construct($data = array()) {
 		if(empty($data)) {
 			$data = array_merge((array)$_GET, (array)$_POST);
 		}
-		$this->data = $this->filterData($data);	}
+		$this->data = $this->filterData($data);	
+	}
 
 	/**
 	 * 过滤数据
@@ -52,6 +53,27 @@ class Form {
 	}
 
 	/**
+	 * 设置表单数据
+	 * @param array $data 表单数据
+	 */
+	public function setData($data = array()) {
+		$this->data = $data;
+	}
+
+	/**
+	 * 获取字段名或变量
+	 * @param array $data 表单数据
+	 */
+	public function getData($field, $type = 0) {
+		if($type){
+			$data = $field;
+		}else{
+			$data = $this->data[$field];
+		}
+		return $data;
+	}
+
+	/**
 	 * 获取请求值
 	 * @param  string $name    键名
 	 * @param  string $default 默认值
@@ -70,11 +92,13 @@ class Form {
 	/**
 	 * 判断数组
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isArray($field){
-		if(is_array($this->data[$field])){
-			if(empty($this->data[$field])){
+	public function isArray($field, $type = 0){
+		$data = $this->getData($field, $type);
+		if(is_array($data)){
+			if(empty($data)){
 				return false;
 			}else{
 				return true;
@@ -87,10 +111,12 @@ class Form {
 	/**
 	 * 判断不为空
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isEmpty($field){
-		if(!empty($this->data[$field])){
+	public function isEmpty($field, $type = 0){
+		$data = $this->getData($field, $type);
+		if(!empty($data)){
 			return true;
 		}else{
 			return false;
@@ -100,81 +126,90 @@ class Form {
 	/**
 	 * 判断邮箱
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isEmail($field){
-		$this->isPreg('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/', $field);
+	public function isEmail($field, $type = 0){
+		$this->isPreg('/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/', $field, $type);
 	}
 
 	/**
 	 * 判断网址
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isUrl($field){
-		$this->isPreg('/^http(s?):\/\/(?:[A-za-z0-9-]+\.)+[A-za-z]{2,4}(:\d+)?(?:[\/\?#][\/=\?%\-&~`@[\]\':+!\.#\w]*)?$/', $field);
+	public function isUrl($field, $type = 0){
+		$this->isPreg('/^http(s?):\/\/(?:[A-za-z0-9-]+\.)+[A-za-z]{2,4}(:\d+)?(?:[\/\?#][\/=\?%\-&~`@[\]\':+!\.#\w]*)?$/', $field, $type);
 	}
 
 	/**
 	 * 判断货币
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isCurrency($field){
-		$this->isPreg('/^\d+(\.\d+)?$/', $field);
+	public function isCurrency($field, $type = 0){
+		$this->isPreg('/^\d+(\.\d+)?$/', $field, $type);
 	}
 
 	/**
 	 * 判断数字
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isNumber($field){
-		$this->isPreg('/^\d+$/', $field);
+	public function isNumber($field, $type = 0){
+		$this->isPreg('/^\d+$/', $field, $type);
 	}
 
 	/**
 	 * 判断区号
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isZip($field){
-		$this->isPreg('/^\d{6}$/', $field);
+	public function isZip($field, $type = 0){
+		$this->isPreg('/^\d{6}$/', $field, $type);
 	}
 
 	/**
 	 * 判断整数
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isInteger($field){
-		$this->isPreg('/^[-\+]?\d+$/', $field);
+	public function isInteger($field, $type = 0){
+		$this->isPreg('/^[-\+]?\d+$/', $field, $type);
 	}
 
 	/**
-	 * 判断整数
+	 * 判断浮点数
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isDouble($field){
-		$this->isPreg('/^[-\+]?\d+$/', $field);
+	public function isDouble($field, $type = 0){
+		$this->isPreg('/^[-\+]?\d+$/', $field, $type);
 	}
 
 	/**
 	 * 判断英文
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isEnglish($field){
+	public function isEnglish($field, $type = 0){
 		$this->isPreg('/^[A-Za-z]+$/', $field);
 	}
 
 	/**
 	 * 判断长度
 	 * @param  sting  $field 字段名
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isLength($field, $len){
+	public function isLength($field, $len, $type = 0){
 		$length  =  mb_strlen($this->data[$field],'utf-8');
 		if(strpos($rule,',')) {
             list($min,$max)   =  explode(',',$rule);
@@ -191,10 +226,13 @@ class Form {
 	/**
 	 * 判断正则
 	 * @param  sting  $rule 规则
+	 * @param   sting $field 字段
+	 * @param  type   $type 字段类型
 	 * @return boolean
 	 */
-	public function isPreg($rule, $field){
-		if(preg_match($rule, $this->data[$field]) === 1){
+	public function isPreg($rule, $field, $type = 0){
+		$data = $this->getData($field, $type);
+		if(preg_match($rule, $data) === 1){
             return true;
         }else{
         	return false;
@@ -203,39 +241,47 @@ class Form {
 
 	/**
 	 * html转换字符串
-	 * @param  string $html HTML内容
+	 * @param  string $field 字段名/HTML内容
+	 * @param  type   $type 字段类型
 	 * @return string
 	 */
-	public function htmlEncode($html){
-		return htmlspecialchars($html, ENT_QUOTES, 'UTF-8');
+	public function htmlEncode($field, $type = 0){
+		$data = $this->getData($field, $type);
+		return htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
 	}
 
 	/**
 	 * 字符串转换html
-	 * @param  string $html HTML内容
+	 * @param  string $field 字段名/HTML内容
+	 * @param  type   $type 字段类型
 	 * @return string
 	 */
-	public function htmlDecode($html){
-		return html_entity_decode($html, ENT_QUOTES, 'UTF-8');
+	public function htmlDecode($field, $type = 0){
+		$data = $this->getData($field, $type);
+		return html_entity_decode($data, ENT_QUOTES, 'UTF-8');
 	}
 
 	/**
 	 * 清理HTML
-	 * @param  string $html HTML内容
+	 * @param  string $field 字段名/HTML内容
+	 * @param  type   $type 字段类型
 	 * @return string
 	 */
-	public function filterHtml($html){
-		$html = $this->htmlDecode($html);
-		return strip_tags($str);
+	public function filterHtml($field, $type = 0){
+		$data = $this->getData($field, $type);
+		$html = $this->htmlDecode($data, 1);
+		return strip_tags($html);
 	}
 
 	/**
 	 * 过滤非HTTP协议
-	 * @param  string $uri URI地址
+	 * @param  string $field 字段名/URI地址
+	 * @param  type   $type 字段类型
 	 * @return string
 	 */
-	public function filterUri($uri) {
-		$uri = $this->htmlDecode($uri);
+	public function filterUri($field, $type = 0) {
+		$data = $this->getData($field, $type);
+		$uri = $this->htmlDecode($data, 1);
 		$allowed_protocols = array('http' => true, 'https' => true);
         do {
             $before = $uri;
@@ -256,21 +302,22 @@ class Form {
 
 	/**
 	 * 过滤XSS
-	 * @param  string $html HTML内容
+	 * @param  string $field 字段名/HTML内容
 	 * @return string
 	 */
-	public function filterXss($html, $allowedTags = array(), $allowedStyleProperties = array()) {
+	public function filterXss($field, $allowedTags = array(), $allowedStyleProperties = array(), $type = 0) {
 		static $xss;
 		if(!isset($xss)) {
 			$xss = new \framework\ext\Xss();
 		}
-		$html = $this->htmlDecode($html);
+		$data = $this->getData($field, $type);
+		$html = $this->htmlDecode($data, 1);
 		return $xss->filter($html, $allowedTags, $allowedStyleProperties);
 	}
 
 	/**
 	 * 获取生成令牌
-	 * @param  string $key 生成密钥
+	 * @param  string $key 密钥
 	 * @return string
 	 */
 	public function tokenGet($key) {
