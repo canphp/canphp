@@ -28,7 +28,7 @@ class Form {
 		if(empty($data)) {
 			$data = array_merge((array)$_GET, (array)$_POST);
 		}
-		$this->data = $this->filterData($data);	
+		$this->data = $this->filterData($data);
 	}
 
 	/**
@@ -47,7 +47,7 @@ class Form {
 	    	if(get_magic_quotes_gpc()) {
 	    		$data = stripslashes($data);
 	    	}
-	    	return $this->htmlEncode($data);
+	    	return $this->htmlEncode($data, 1);
 	        
 	    }
 	}
