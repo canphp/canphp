@@ -66,12 +66,19 @@ function obj($class, $layer = 'model'){
 	}
 	$app = strtolower($app);
 	$class = "\\app\\{$app}\\{$layer}\\{$module}".ucfirst($layer);
+	
+	if(!class_exists($class)){
+		$class = "\\app\\base\\{$layer}\\{$module}".ucfirst($layer);
+	}
+
 	if(isset($objArr[$class])){
         return $objArr[$class];
 	}
+	
 	if(!class_exists($class)){
 		throw new \Exception("Class '{$class}' not found'", 500);
 	}
+
 	$obj = new $class();
 	$objArr[$class] = $obj;
 	return $obj;

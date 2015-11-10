@@ -133,7 +133,7 @@ class Model {
 		if( !empty($this->options['pager']) ){
 			$count = $this->getDb()->Count($table, $where);
 			$this->_pager($this->options['pager']['page'], $this->options['pager']['pageSize'], 
-						$this->options['pager']['scope'] = 10, $count);
+						$this->options['pager']['scope'], $count);
 			$this->options['pager'] = array();
 			$limit = $this->pager['offset'] . ',' . $this->pager['limit'];
 		}
