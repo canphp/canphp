@@ -1,14 +1,14 @@
 {
-    "name": "topthink/thinkphp",
-    "description": "the ThinkPHP Framework",
+    "name": "canphp/canphp",
+    "description": "the canphp Framework",
     "type": "framework",
-    "keywords": ["framework","thinkphp","ORM"],
-    "homepage": "http://thinkphp.cn/",
+    "keywords": ["framework","canphp","speedphp"],
+    "homepage": "http://www.canphp.com/",
     "license": "Apache2",
     "authors": [
         {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
+            "name": "canphp",
+            "email": "404352772@qq.com"
         }
     ],
     "require": {
